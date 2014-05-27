@@ -1,0 +1,24 @@
+{
+  "name": "photostreamer-server",
+  "version": "0.0.0",
+  "description": "Displays photos stored on Amazon S3 that are being streamed live from the field.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".git"
+  },
+  "author": "Andrew Chavez <adchavez@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "backbone.io": "^0.4.1",
+    "body-parser": "^1.2.0",
+    "ejs": "^1.0.0",
+    "express": "^4.3.0",
+    "logfmt": "^1.1.2",
+    "mongoose": "^3.8.11",
+    "mongoose-types": "^1.0.3"
+  }
+}

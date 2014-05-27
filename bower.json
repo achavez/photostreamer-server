@@ -1,0 +1,15 @@
+{
+  "name": "photostreamer-server",
+  "version": "0.0.0",
+  "authors": [
+    "Andrew Chavez <adchavez@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "bootstrap": "~3.1.1",
+    "handlebars": "~1.3.0",
+    "jquery": "~2.1.1"
+  }
+}

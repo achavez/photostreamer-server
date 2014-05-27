@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Photos</title>
+	<link rel='stylesheet' type='text/css' href='/bootstrap/dist/css/bootstrap.css' />
+	<script src='/jquery/dist/jquery.js'></script>
+	<script src='/socket.io/socket.io.js'></script>
+	<script src='/handlebars/handlebars.js'></script>
+	<script src='/underscore/underscore.js'></script>
+	<script src='/backbone/backbone.js'></script>
+	<script src='/socket.io/backbone.io.js'></script>
+	<script src='/client.js'></script>
+</head>
+<body>
+	<div class="container">
+		<h1>Photos</h1>
+		<div class="row">
+			<div id="photos" class="col-xs-8 row">
+				<script id="photo-template" type="text/x-handlebars-template">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<img class="img-responsive" src="{{thumbnail}}" />
+						<p>
+							<small><strong>Created</strong> {{created}}</small></br>
+							<small><strong>Filesize</strong> {{filesize}}</small></br>
+							<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
+						</p>
+						<div class="btn-group btn-group-xs">
+							<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-download-alt"></i> Request</button>
+							<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
+						</div>
+					</div>
+				</div>
+				</script>
+			</div>
+			<div class="col-xs-4">
+				<div class="well">
+					Some text
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
