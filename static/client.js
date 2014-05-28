@@ -22,6 +22,9 @@ var PhotoView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#photo-template").html();
 		this.template = Handlebars.compile(source);
+		this.model.on("change", function() {
+			this.render();
+		}, this);
 	},
 	className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
 	events: {
@@ -30,7 +33,6 @@ var PhotoView = Backbone.View.extend({
 	},
 	request: function() {
 		this.model.request();
-		this.render();
 	},
 	inspect: function() {
 		window.inspectorView = new InspectorView({model: this.model});
@@ -46,9 +48,19 @@ var InspectorView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#inspector-template").html();
 		this.template = Handlebars.compile(source);
+		this.model.on("change", function() {
+			this.render();
+		}, this);
+	},
+	events: {
+		"click button": "request"
+	},
+	request: function() {
+		this.model.request();
 	},
 	render: function() {
-		$("#inspector").html(this.template(this.model.toJSON()));
+		this.$el.html(this.template(this.model.toJSON()));
+		$("#inspector").html(this.el);
 	}
 });
 
