@@ -1,11 +1,29 @@
-Backbone.io.connect();
+var socket = Backbone.io.connect();
+
+/* Connection indicators, error handling */
+socket.on("connect", function() {
+	$(".disconnected").addClass("hidden");
+	$(".connected").removeClass("hidden");
+});
+socket.on("disconnect", function() {
+	$(".disconnected").removeClass("hidden");
+	$(".connected").addClass("hidden");
+});
+socket.on("reconnect", function() {
+	window.photos.fetch();
+});
+
+function throwAlert(type, msg) {
+	var source = $("#alert-template").html();
+	var alertTemplate = Handlebars.compile(source);
+	$("#alert").html(alertTemplate({type: type, message: msg}));
+};
 
 /* Backbone model stored in Mongo */
 var Photo = Backbone.Model.extend({
 	idAttribute: "_id",
 	request: function() {
-		this.set({requested: true});
-		this.save();
+		this.save("requested", true, {wait: true});
 	}
 });
 
@@ -15,6 +33,10 @@ var Photos = Backbone.Collection.extend({
 	backend: 'photos',
 	initialize: function() {
 		this.bindBackend();
+		this.on("change", function(photo) {
+			var changed = this.get(photo);
+			changed.trigger("sync");
+		});
 	}
 });
 
@@ -22,7 +44,7 @@ var PhotoView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#photo-template").html();
 		this.template = Handlebars.compile(source);
-		this.model.on("change", function() {
+		this.model.on("sync", function() {
 			this.render();
 		}, this);
 	},
@@ -48,7 +70,7 @@ var InspectorView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#inspector-template").html();
 		this.template = Handlebars.compile(source);
-		this.model.on("change", function() {
+		this.model.on("sync", function() {
 			this.render();
 		}, this);
 	},
@@ -88,8 +110,8 @@ $(function() {
 	window.photos = new Photos();
 	window.photos.fetch({
 		success: function() {
-			var view = new PhotostreamView({collection: photos});
-			$('#photos').append(view.render().el);
+			window.photostream = new PhotostreamView({collection: photos});
+			$('#photos').append(window.photostream.render().el);
 		}
 	});
 	// Register Handlebars helpfer to format dates ...

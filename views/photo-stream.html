@@ -3,6 +3,7 @@
 <head>
 	<title>Photos</title>
 	<link rel='stylesheet' type='text/css' href='/bootstrap/dist/css/bootstrap.css' />
+	<link rel='stylesheet' type='text/css' href='client.css' />
 	<script src='/jquery/dist/jquery.js'></script>
 	<script src='/momentjs/moment.js'></script>
 	<script src='/filesize/lib/filesize.js'></script>
@@ -17,10 +18,19 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>Photos</h1>
+			<span class="label label-success connected"><i class="glyphicon glyphicon-ok-circle"></i> Connected</span>
+			<span class="hidden label label-danger disconnected"><i class="glyphicon glyphicon-remove-circle"></i> Can't connect to server</span>
 		</div>
 		<div class="row">
 			<div class="col-xs-8">
 				<div id="photos" class="row">
+					<div id="alert"></div>
+					<script id="alert-template" type="text/x-handlebars-template">
+						<div class="alert alert-{{type}} alert-dismissable">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							{{message}}
+						</div>
+					</script>
 					<script id="photo-template" type="text/x-handlebars-template">
 					<div class="panel panel-default">
 						<div class="panel-body">
