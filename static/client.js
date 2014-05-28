@@ -80,4 +80,10 @@ $(function() {
 			$('#photos').append(view.render().el);
 		}
 	});
+	// Register Handlebars helpfer to format dates
+	Handlebars.registerHelper('date', function(time, format) {
+		var time = moment(time)
+		var result = '<time datetime="' + time.toISOString() + '">' + time.format(format) + '</time>';
+		return new Handlebars.SafeString(result);
+	});
 });

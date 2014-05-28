@@ -4,6 +4,7 @@
 	<title>Photos</title>
 	<link rel='stylesheet' type='text/css' href='/bootstrap/dist/css/bootstrap.css' />
 	<script src='/jquery/dist/jquery.js'></script>
+	<script src='/momentjs/moment.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/handlebars/handlebars.js'></script>
 	<script src='/underscore/underscore.js'></script>
@@ -24,7 +25,7 @@
 						<div class="panel-body">
 							<img class="img-responsive" src="{{thumbnail}}" />
 							<p>
-								<small><strong>Created</strong> {{created}}</small></br>
+								<small><strong>Created</strong> {{date created "h:mma M/D/YY"}}</small></br>
 								<small><strong>Filesize</strong> {{filesize}}</small></br>
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
@@ -49,7 +50,8 @@
 							<img src="{{thumbnail}}" />
 							<p>
 								<small><strong>File ID</strong> {{fileid}}</small></br>
-								<small><strong>Created</strong> {{created}}</small></br>
+								<small><strong>Time created</strong> {{date created "h:mma"}}</small></br>
+								<small><strong>Date created</strong> {{date created "MMMM D, YYYY"}}</small></br>
 								<small><strong>Filesize</strong> {{filesize}}</small></br>
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
@@ -58,6 +60,7 @@
 							{{/unless}}
 						</script>
 						<div id="inspector">
+							<p>Click <button type="button" class="inspect btn btn-default btn-xs"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button> on a photo to open it here.</p>
 						</div>
 					</div>
 				</div>
