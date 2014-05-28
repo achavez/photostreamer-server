@@ -5,6 +5,7 @@
 	<link rel='stylesheet' type='text/css' href='/bootstrap/dist/css/bootstrap.css' />
 	<script src='/jquery/dist/jquery.js'></script>
 	<script src='/momentjs/moment.js'></script>
+	<script src='/filesize/lib/filesize.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='/handlebars/handlebars.js'></script>
 	<script src='/underscore/underscore.js'></script>
@@ -26,7 +27,7 @@
 							<img class="img-responsive" src="{{thumbnail}}" />
 							<p>
 								<small><strong>Created</strong> {{date created "h:mma M/D/YY"}}</small></br>
-								<small><strong>Filesize</strong> {{filesize}}</small></br>
+								<small><strong>Filesize</strong> {{fsize filesize}}</small></br>
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
 							<div class="btn-group btn-group-xs">
@@ -52,7 +53,7 @@
 								<small><strong>File ID</strong> {{fileid}}</small></br>
 								<small><strong>Time created</strong> {{date created "h:mma"}}</small></br>
 								<small><strong>Date created</strong> {{date created "MMMM D, YYYY"}}</small></br>
-								<small><strong>Filesize</strong> {{filesize}}</small></br>
+								<small><strong>Filesize</strong> {{fsize filesize}}</small></br>
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
 							{{#unless requested}}
