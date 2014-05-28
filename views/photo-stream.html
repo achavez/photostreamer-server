@@ -32,7 +32,7 @@
 								{{#unless requested}}
 									<button type="button" class="btn btn-default request-full"><i class="glyphicon glyphicon-download-alt"></i> Request</button>
 								{{/unless}}
-								<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
+								<button type="button" class="inspect btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
 							</div>
 						</div>
 					</div>
@@ -40,6 +40,27 @@
 				</div>
 			</div>
 			<div class="col-xs-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Inspector</h3>
+					</div>
+					<div class="panel-body">
+						<script id="inspector-template" type="text/x-handlebars-template">
+							<img src="{{thumbnail}}" />
+							<p>
+								<small><strong>File ID</strong> {{fileid}}</small></br>
+								<small><strong>Created</strong> {{created}}</small></br>
+								<small><strong>Filesize</strong> {{filesize}}</small></br>
+								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
+							</p>
+							{{#unless requested}}
+								<button type="button" class="btn btn-default btn-block request-full"><i class="glyphicon glyphicon-download-alt"></i> Request file</button>
+							{{/unless}}
+						</script>
+						<div id="inspector">
+						</div>
+					</div>
+				</div>
 				<div class="well">
 					Some text
 				</div>

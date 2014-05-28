@@ -25,15 +25,30 @@ var PhotoView = Backbone.View.extend({
 	},
 	className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
 	events: {
-		"click .request-full": "request"
+		"click .request-full": "request",
+		"click .inspect": "inspect"
 	},
 	request: function() {
 		this.model.request();
 		this.render();
 	},
+	inspect: function() {
+		window.inspectorView = new InspectorView({model: this.model});
+		window.inspectorView.render();
+	},
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
+	}
+});
+
+var InspectorView = Backbone.View.extend({
+	initialize: function() {
+		var source = $("#inspector-template").html();
+		this.template = Handlebars.compile(source);
+	},
+	render: function() {
+		$("#inspector").html(this.template(this.model.toJSON()));
 	}
 });
 
