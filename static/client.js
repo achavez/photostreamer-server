@@ -2,7 +2,11 @@ Backbone.io.connect();
 
 /* Backbone model stored in Mongo */
 var Photo = Backbone.Model.extend({
-	idAttribute: "_id"
+	idAttribute: "_id",
+	request: function() {
+		this.set({requested: true});
+		this.save();
+	}
 });
 
 /* Backbone collection bound to Mongo using Backbone.io */
@@ -19,7 +23,14 @@ var PhotoView = Backbone.View.extend({
 		var source = $("#photo-template").html();
 		this.template = Handlebars.compile(source);
 	},
-	className: 'col-xs-4',
+	className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
+	events: {
+		"click .request-full": "request"
+	},
+	request: function() {
+		this.model.request();
+		this.render();
+	},
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;

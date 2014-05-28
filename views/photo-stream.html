@@ -13,25 +13,31 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Photos</h1>
+		<div class="page-header">
+			<h1>Photos</h1>
+		</div>
 		<div class="row">
-			<div id="photos" class="col-xs-8 row">
-				<script id="photo-template" type="text/x-handlebars-template">
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<img class="img-responsive" src="{{thumbnail}}" />
-						<p>
-							<small><strong>Created</strong> {{created}}</small></br>
-							<small><strong>Filesize</strong> {{filesize}}</small></br>
-							<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
-						</p>
-						<div class="btn-group btn-group-xs">
-							<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-download-alt"></i> Request</button>
-							<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
+			<div class="col-xs-8">
+				<div id="photos" class="row">
+					<script id="photo-template" type="text/x-handlebars-template">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<img class="img-responsive" src="{{thumbnail}}" />
+							<p>
+								<small><strong>Created</strong> {{created}}</small></br>
+								<small><strong>Filesize</strong> {{filesize}}</small></br>
+								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
+							</p>
+							<div class="btn-group btn-group-xs">
+								{{#unless requested}}
+									<button type="button" class="btn btn-default request-full"><i class="glyphicon glyphicon-download-alt"></i> Request</button>
+								{{/unless}}
+								<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
+							</div>
 						</div>
 					</div>
+					</script>
 				</div>
-				</script>
 			</div>
 			<div class="col-xs-4">
 				<div class="well">
