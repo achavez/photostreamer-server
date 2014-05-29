@@ -40,6 +40,39 @@ app.get('/requests/:sender', function(req, res) {
 	})
 });
 
+// 
+app.get('/download/:id', function(req, res) {
+	var id = req.param('id');
+	models.Thumbnail.findOne({'_id': id}, function(err, thumb) {
+		if (err) {
+			res.send(500, err);
+			console.error(err);
+		}
+		else if (thumb) {
+			http.get(thumb.full, function(download) {
+				console.log("Initiating download for " + thumb.full);
+				res.attachment();
+				download.pipe(res, {end: false});
+				download.on('end', function() {
+					res.end();
+					thumb.downloaded = true;
+					thumb.save(function (err) {
+						if (err) {
+							console.error(err);
+						}
+						else {
+							backend.emit('updated', thumb);
+						}
+					});
+				});
+			});
+		}
+		else {
+			res.send(400, 'Photo with file ID ' + id + ' not found.');
+		}
+	});
+});
+
 // Make sure all POSTs are application/json
 app.use(function(req, res, next) {
 	if(req.method == 'POST') {

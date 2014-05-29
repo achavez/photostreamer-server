@@ -51,6 +51,11 @@ var thumbnailSchema = new Schema({
 		required: true,
 		default: false,
 		index: true
+	},
+	downloaded: {
+		type: Boolean,
+		required: true,
+		default: false
 	}
 });
 

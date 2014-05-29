@@ -151,6 +151,9 @@ var DownloadsView = Backbone.View.extend({
 			if(download.hasChanged('full')) {
 				this.addSingle(download);
 			}
+			else if(download.hasChanged('downloaded')) {
+				this.render();
+			}
 		}, this);
 	},
 	addSingle: function(download) {
@@ -161,6 +164,7 @@ var DownloadsView = Backbone.View.extend({
 		return this.template(download.toJSON());
 	},
 	render: function() {
+		this.$el.html('');
 		this.collection.forEach(function(download) {
 			if(download.get('full')) {
 				this.$el.append(this.renderSingle(download));

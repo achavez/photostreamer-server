@@ -1,6 +1,8 @@
 <div class="panel panel-default">
 	<div class="panel-body">
-		<img class="img-responsive" src="{{thumbnail}}" />
+		<p>
+			<img class="img-responsive" src="{{thumbnail}}" />
+		</p>
 		<p>
 			<small><strong>Created</strong> {{date created "h:mm:ssa M/D/YY"}}</small></br>
 			<small><strong>Filesize</strong> {{fsize filesize}}</small></br>
@@ -11,7 +13,13 @@
 				<button type="button" class="btn btn-default request-full"><i class="glyphicon glyphicon-import"></i> Request</button>
 			{{/unless}}
 			{{#if full}}
-				<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+				<a href="/download/{{_id}}">
+					{{#if downloaded}}
+						<button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-saved"></i> Redownload</button>
+					{{else}}
+						<button type="button" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+					{{/if}}
+				</a>
 			{{/if}}
 			<button type="button" class="inspect btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
 		</div>

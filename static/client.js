@@ -15505,23 +15505,35 @@ Handlebars.registerHelper('fsize', function(bytes) {
 this["Templates"]["download"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = "", stack1, helper, options, self=this, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
+function program1(depth0,data) {
+  
+  
+  return "<i class=\"glyphicon glyphicon-ok text-success\"></i>";
+  }
 
   buffer += "<tr>\n	<td>";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.downloaded), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "</td>\n	<td>";
   if (helper = helpers.fileid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.fileid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "</td>\n	<td>"
     + escapeExpression((helper = helpers.fsize || (depth0 && depth0.fsize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.filesize), options) : helperMissing.call(depth0, "fsize", (depth0 && depth0.filesize), options)))
-    + "</td>\n	<td><button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"glyphicon glyphicon-download-alt\"></i></button></td>\n</tr>";
+    + "</td>\n	<td>\n		<a href=\"/download/";
+  if (helper = helpers._id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n			<button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"glyphicon glyphicon-download-alt\"></i></button>\n		</a>\n	</td>\n</tr>";
   return buffer;
   });
 
 this["Templates"]["inspector"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -15531,29 +15543,52 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  var buffer = "", stack1, helper;
+  buffer += "\n	<a href=\"/download/";
+  if (helper = helpers._id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n		";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.downloaded), {hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n	</a>\n";
+  return buffer;
+  }
+function program4(depth0,data) {
   
-  return "\n	<button type=\"button\" class=\"btn btn-primary download\"><i class=\"glyphicon glyphicon-download-alt\"></i> Download</button>\n";
+  
+  return "\n			<button type=\"button\" class=\"btn btn-primary download\"><i class=\"glyphicon glyphicon-saved\"></i> Redownload</button>\n		";
   }
 
-  buffer += "<img class=\"img-responsive\" src=\"";
+function program6(depth0,data) {
+  
+  
+  return "\n			<button type=\"button\" class=\"btn btn-primary download\"><i class=\"glyphicon glyphicon-download-alt\"></i> Download</button>\n		";
+  }
+
+  buffer += "<p>\n	<img class=\"img-responsive\" src=\"";
   if (helper = helpers.thumbnail) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.thumbnail); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" />\n<p>\n	<small><strong>File ID</strong> ";
+    + "\" />\n</p>\n<p>\n	<strong>File ID</strong> ";
   if (helper = helpers.fileid) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.fileid); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</small></br>\n	<small><strong>Time created</strong> "
+    + "</br>\n	<strong>Database ID</strong> ";
+  if (helper = helpers._id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "</br>\n	<strong>Time created</strong> "
     + escapeExpression((helper = helpers.date || (depth0 && depth0.date),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.created), "h:mma", options) : helperMissing.call(depth0, "date", (depth0 && depth0.created), "h:mma", options)))
-    + "</small></br>\n	<small><strong>Date created</strong> "
+    + "</br>\n	<strong>Date created</strong> "
     + escapeExpression((helper = helpers.date || (depth0 && depth0.date),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.created), "MMMM D, YYYY", options) : helperMissing.call(depth0, "date", (depth0 && depth0.created), "MMMM D, YYYY", options)))
-    + "</small></br>\n	<small><strong>Filesize</strong> "
+    + "</br>\n	<strong>Filesize</strong> "
     + escapeExpression((helper = helpers.fsize || (depth0 && depth0.fsize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.filesize), options) : helperMissing.call(depth0, "fsize", (depth0 && depth0.filesize), options)))
-    + "</small></br>\n	<small><strong>Size</strong> "
+    + "</br>\n	<strong>Size</strong> "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "px x "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px</small>\n</p>\n";
+    + "px\n</p>\n";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.requested), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
@@ -15565,7 +15600,7 @@ function program3(depth0,data) {
 this["Templates"]["photo"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
+  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -15575,15 +15610,34 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  var buffer = "", stack1, helper;
+  buffer += "\n				<a href=\"/download/";
+  if (helper = helpers._id) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + "\">\n					";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.downloaded), {hash:{},inverse:self.program(6, program6, data),fn:self.program(4, program4, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n				</a>\n			";
+  return buffer;
+  }
+function program4(depth0,data) {
   
-  return "\n				<button type=\"button\" class=\"btn btn-default\"><i class=\"glyphicon glyphicon-download-alt\"></i> Download</button>\n			";
+  
+  return "\n						<button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"glyphicon glyphicon-saved\"></i> Redownload</button>\n					";
   }
 
-  buffer += "<div class=\"panel panel-default\">\n	<div class=\"panel-body\">\n		<img class=\"img-responsive\" src=\"";
+function program6(depth0,data) {
+  
+  
+  return "\n						<button type=\"button\" class=\"btn btn-default btn-xs\"><i class=\"glyphicon glyphicon-download-alt\"></i> Download</button>\n					";
+  }
+
+  buffer += "<div class=\"panel panel-default\">\n	<div class=\"panel-body\">\n		<p>\n			<img class=\"img-responsive\" src=\"";
   if (helper = helpers.thumbnail) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.thumbnail); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" />\n		<p>\n			<small><strong>Created</strong> "
+    + "\" />\n		</p>\n		<p>\n			<small><strong>Created</strong> "
     + escapeExpression((helper = helpers.date || (depth0 && depth0.date),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.created), "h:mm:ssa M/D/YY", options) : helperMissing.call(depth0, "date", (depth0 && depth0.created), "h:mm:ssa M/D/YY", options)))
     + "</small></br>\n			<small><strong>Filesize</strong> "
     + escapeExpression((helper = helpers.fsize || (depth0 && depth0.fsize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.filesize), options) : helperMissing.call(depth0, "fsize", (depth0 && depth0.filesize), options)))
@@ -22752,6 +22806,9 @@ var DownloadsView = Backbone.View.extend({
 			if(download.hasChanged('full')) {
 				this.addSingle(download);
 			}
+			else if(download.hasChanged('downloaded')) {
+				this.render();
+			}
 		}, this);
 	},
 	addSingle: function(download) {
@@ -22762,6 +22819,7 @@ var DownloadsView = Backbone.View.extend({
 		return this.template(download.toJSON());
 	},
 	render: function() {
+		this.$el.html('');
 		this.collection.forEach(function(download) {
 			if(download.get('full')) {
 				this.$el.append(this.renderSingle(download));

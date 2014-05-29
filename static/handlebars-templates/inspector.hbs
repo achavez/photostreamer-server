@@ -1,14 +1,23 @@
-<img class="img-responsive" src="{{thumbnail}}" />
 <p>
-	<small><strong>File ID</strong> {{fileid}}</small></br>
-	<small><strong>Time created</strong> {{date created "h:mma"}}</small></br>
-	<small><strong>Date created</strong> {{date created "MMMM D, YYYY"}}</small></br>
-	<small><strong>Filesize</strong> {{fsize filesize}}</small></br>
-	<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
+	<img class="img-responsive" src="{{thumbnail}}" />
+</p>
+<p>
+	<strong>File ID</strong> {{fileid}}</br>
+	<strong>Database ID</strong> {{_id}}</br>
+	<strong>Time created</strong> {{date created "h:mma"}}</br>
+	<strong>Date created</strong> {{date created "MMMM D, YYYY"}}</br>
+	<strong>Filesize</strong> {{fsize filesize}}</br>
+	<strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px
 </p>
 {{#unless requested}}
 	<button type="button" class="btn btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
 {{/unless}}
 {{#if full}}
-	<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+	<a href="/download/{{_id}}">
+		{{#if downloaded}}
+			<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-saved"></i> Redownload</button>
+		{{else}}
+			<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+		{{/if}}
+	</a>
 {{/if}}
