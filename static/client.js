@@ -48,6 +48,7 @@ var PhotoView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#photo-template").html();
 		this.template = Handlebars.compile(source);
+
 		this.model.on("sync", function() {
 			this.render();
 		}, this);
@@ -74,6 +75,7 @@ var InspectorView = Backbone.View.extend({
 	initialize: function() {
 		var source = $("#inspector-template").html();
 		this.template = Handlebars.compile(source);
+
 		this.model.on("sync", function() {
 			this.render();
 		}, this);
@@ -110,12 +112,48 @@ var PhotostreamView = Backbone.View.extend({
 	}
 });
 
+var DownloadsView = Backbone.View.extend({
+	initialize: function() {
+		var source = $("#downloads-template").html();
+		this.template = Handlebars.compile(source);
+
+		this.setElement(this.el);
+		this.render();
+
+		this.collection.on("add", function(download) {
+			this.addSingle(download);
+		}, this);
+
+		this.collection.on("change", function(download) {
+			if(download.hasChanged('full')) {
+				this.addSingle(download);
+			}
+		}, this);
+	},
+	addSingle: function(download) {
+		var el = this.renderSingle(download);
+		this.$el.prepend(el);
+	},
+	renderSingle: function(download) {
+		return this.template(download.toJSON());
+	},
+	render: function() {
+		this.$el.html('');
+		this.collection.forEach(function(download) {
+			if(download.get('full')) {
+				this.$el.append(this.renderSingle(download));
+			}
+		}, this);
+	}
+});
+
 $(function() {
 	window.photos = new Photos();
 	window.photos.fetch({
 		success: function() {
-			window.photostream = new PhotostreamView({collection: photos});
-			$('#photos').append(window.photostream.render().el);
+			var photostreamView = new PhotostreamView({collection: photos});
+			$('#photos').append(photostreamView.render().el);
+			var downloadsView = new DownloadsView({collection: photos, el: $("#downloads")});
 		}
 	});
 	// Register Handlebars helpfer to format dates ...

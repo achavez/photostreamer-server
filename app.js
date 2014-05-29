@@ -19,13 +19,14 @@ app.use(logfmt.requestLogger());
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').__express);
 
+// Photostream viewer page
 app.get('/', function(req, res){
 	res.render('photo-stream.html');
 });
 
 // Return a list of requested high-resolution photos
 app.get('/requests/:sender', function(req, res) {
-	models.Thumbnail.find({ 'requested': true }, 'fileid', function (err, results) {
+	models.Thumbnail.find({ 'requested': true, 'full': null }, 'fileid', function (err, results) {
 		if (err) {
 			console.error(err);
 		}
@@ -79,7 +80,26 @@ app.post('/photo/thumb', function(req, res, next){
 
 // Process full-resolution photo uploads
 app.post('/photo/full', function(req, res, next) {
-	// Set status to 2
+	models.Thumbnail.findOne({fileid: req.body.fileid, sender: req.body.sender}, function (err, thumb) {
+		if (err) {
+			res.json(400, err);
+			console.error(err);
+		}
+		else {
+			thumb.full = req.body.full;
+			thumb.requested = true;
+			thumb.save(function (err) {
+				if (err) {
+					res.json(400, err);
+				}
+				else {
+					console.log("Full resolution photo for " + thumb.fileid + " submitted.")
+					backend.emit('updated', thumb);
+					res.send(200);
+				}
+			});
+		}
+	});
 });
 
 // Use backbone.io to sync Mongoose models with clients

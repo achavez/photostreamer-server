@@ -31,6 +31,9 @@ var thumbnailSchema = new Schema({
 		type: Url,
 		required: true
 	},
+	full: {
+		type: Url
+	},
 	dimensions: {
 		width: {
 			type: Number,

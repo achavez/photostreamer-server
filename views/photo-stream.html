@@ -42,8 +42,11 @@
 							</p>
 							<div class="btn-group btn-group-xs">
 								{{#unless requested}}
-									<button type="button" class="btn btn-default request-full"><i class="glyphicon glyphicon-download-alt"></i> Request</button>
+									<button type="button" class="btn btn-default request-full"><i class="glyphicon glyphicon-import"></i> Request</button>
 								{{/unless}}
+								{{#if full}}
+									<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+								{{/if}}
 								<button type="button" class="inspect btn btn-default"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button>
 							</div>
 						</div>
@@ -67,16 +70,42 @@
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
 							{{#unless requested}}
-								<button type="button" class="btn btn-default btn-primary request-full"><i class="glyphicon glyphicon-download-alt"></i> Request file</button>
+								<button type="button" class="btn btn-default btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
 							{{/unless}}
+							{{#if full}}
+								<button type="button" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+							{{/if}}
 						</script>
 						<div id="inspector">
 							<p>Click <button type="button" class="inspect btn btn-default btn-xs"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button> on a photo to open it here.</p>
 						</div>
 					</div>
 				</div>
-				<div class="well">
-					Some text
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Available downloads</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>File ID</th>
+									<th>Filesize</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="downloads">
+								<td colspan="3">Photos you request will be available here for download once they're sent.</td>
+								<script id="downloads-template" type="text/x-handlebars-template">
+									<tr>
+										<td>{{fileid}}</td>
+										<td>{{fsize filesize}}</td>
+										<td><button type="button" class="btn btn-default btn-primary btn-xs"><i class="glyphicon glyphicon-download-alt"></i></button></td>
+									</tr>
+								</script>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
