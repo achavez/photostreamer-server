@@ -3,8 +3,11 @@
 <head>
 	<title>Photos</title>
 	<link rel='stylesheet' type='text/css' href='/bootstrap/dist/css/bootstrap.css' />
+	<link rel='stylesheet' type='text/css' href='/pnotify/pnotify.core.css' />
 	<link rel='stylesheet' type='text/css' href='client.css' />
 	<script src='/jquery/dist/jquery.js'></script>
+	<script src='/pnotify/pnotify.core.js'></script>
+	<script src='/pnotify/pnotify.desktop.js'></script>
 	<script src='/momentjs/moment.js'></script>
 	<script src='/filesize/lib/filesize.js'></script>
 	<script src='/socket.io/socket.io.js'></script>
@@ -24,13 +27,6 @@
 		<div class="row">
 			<div class="col-xs-8">
 				<div id="photos" class="row">
-					<div id="alert"></div>
-					<script id="alert-template" type="text/x-handlebars-template">
-						<div class="alert alert-{{type}} alert-dismissable">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-							{{message}}
-						</div>
-					</script>
 					<script id="photo-template" type="text/x-handlebars-template">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -61,7 +57,7 @@
 					</div>
 					<div class="panel-body">
 						<script id="inspector-template" type="text/x-handlebars-template">
-							<img src="{{thumbnail}}" />
+							<img class="img-responsive" src="{{thumbnail}}" />
 							<p>
 								<small><strong>File ID</strong> {{fileid}}</small></br>
 								<small><strong>Time created</strong> {{date created "h:mma"}}</small></br>
@@ -70,10 +66,10 @@
 								<small><strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px</small>
 							</p>
 							{{#unless requested}}
-								<button type="button" class="btn btn-default btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
+								<button type="button" class="btn btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
 							{{/unless}}
 							{{#if full}}
-								<button type="button" class="btn btn-default btn-primary"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+								<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
 							{{/if}}
 						</script>
 						<div id="inspector">
@@ -95,18 +91,18 @@
 								</tr>
 							</thead>
 							<tbody id="downloads">
-								<td colspan="3">Photos you request will be available here for download once they're sent.</td>
 								<script id="downloads-template" type="text/x-handlebars-template">
 									<tr>
 										<td>{{fileid}}</td>
 										<td>{{fsize filesize}}</td>
-										<td><button type="button" class="btn btn-default btn-primary btn-xs"><i class="glyphicon glyphicon-download-alt"></i></button></td>
+										<td><button type="button" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-download-alt"></i></button></td>
 									</tr>
 								</script>
 							</tbody>
 						</table>
 					</div>
 				</div>
+				<button id="enable-notifications" type="button" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-comment"></i> Enable desktop notifications</button>
 			</div>
 		</div>
 	</div>

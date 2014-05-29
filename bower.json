@@ -13,6 +13,7 @@
     "jquery": "~2.1.1",
     "momentjs": "~2.6.0",
     "underscore": "~1.6.0",
-    "filesize": "~2.0.3"
+    "filesize": "~2.0.3",
+    "pnotify": "~2.0.1"
   }
 }

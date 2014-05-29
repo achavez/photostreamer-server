@@ -1,3 +1,4 @@
+/* Fire up Websockets */
 var socket = Backbone.io.connect();
 
 /* Connection indicators, error handling */
@@ -8,16 +9,28 @@ socket.on("connect", function() {
 socket.on("disconnect", function() {
 	$(".disconnected").removeClass("hidden");
 	$(".connected").addClass("hidden");
+	new PNotify({
+		title: 'Server connection lost',
+		text: 'New photos won\'t show and you won\'t be able to request photos until you\'re reconnected.',
+		type: 'error',
+		icon: 'glyphicon glyphicon-remove-circle',
+		desktop: {
+			desktop: true
+		}
+	});
 });
 socket.on("reconnect", function() {
 	window.photos.fetch();
+	new PNotify({
+		title: 'Server connection restored',
+		text: 'Everything should be back to normal.',
+		type: 'success',
+		icon: 'glyphicon glyphicon-ok-circle',
+		desktop: {
+			desktop: true
+		}
+	});
 });
-
-function throwAlert(type, msg) {
-	var source = $("#alert-template").html();
-	var alertTemplate = Handlebars.compile(source);
-	$("#alert").html(alertTemplate({type: type, message: msg}));
-};
 
 /* Backbone model stored in Mongo */
 var Photo = Backbone.Model.extend({
@@ -33,9 +46,21 @@ var Photos = Backbone.Collection.extend({
 	backend: 'photos',
 	initialize: function() {
 		this.bindBackend();
+
 		this.on("change", function(photo) {
 			var changed = this.get(photo);
 			changed.trigger("sync");
+
+			if(photo.hasChanged('full')) {
+				new PNotify({
+					title: 'New download',
+					text: photo.get('fileid') + ' available for download.',
+					icon: 'glyphicon glyphicon-download-alt',
+					desktop: {
+						desktop: true
+					}
+				});			
+			}
 		});
 	},
 	comparator: function(photo) {
@@ -81,7 +106,7 @@ var InspectorView = Backbone.View.extend({
 		}, this);
 	},
 	events: {
-		"click button": "request"
+		"click .request-full": "request"
 	},
 	request: function() {
 		this.model.request();
@@ -138,7 +163,6 @@ var DownloadsView = Backbone.View.extend({
 		return this.template(download.toJSON());
 	},
 	render: function() {
-		this.$el.html('');
 		this.collection.forEach(function(download) {
 			if(download.get('full')) {
 				this.$el.append(this.renderSingle(download));
@@ -148,6 +172,7 @@ var DownloadsView = Backbone.View.extend({
 });
 
 $(function() {
+	// Populate the Backbone collection and fire up the views
 	window.photos = new Photos();
 	window.photos.fetch({
 		success: function() {
@@ -166,4 +191,14 @@ $(function() {
 	Handlebars.registerHelper('fsize', function(bytes) {
 		return new Handlebars.SafeString(filesize(bytes));
 	});
+	// Setup desktop notifications
+	var permissionButton = $("#enable-notifications");
+	if(PNotify.desktop.checkPermission()) {
+		permissionButton.click(function() {
+			PNotify.desktop.permission();
+			this.remove();
+		});
+	} else {
+		permissionButton.remove();
+	}
 });
