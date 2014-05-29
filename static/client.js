@@ -37,6 +37,10 @@ var Photos = Backbone.Collection.extend({
 			var changed = this.get(photo);
 			changed.trigger("sync");
 		});
+	},
+	comparator: function(photo) {
+		var created = photo.get('created');
+		return -moment(created).unix();
 	}
 });
 
