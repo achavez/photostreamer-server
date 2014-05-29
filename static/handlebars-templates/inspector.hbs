@@ -3,7 +3,10 @@
 </p>
 <p>
 	<strong>File ID</strong> {{fileid}}</br>
-	<strong>Database ID</strong> {{_id}}</br>
+	<strong>Thumbnail URL</strong> <a href="{{thumbnail}}" target="_blank">{{thumbnail}}</a></br>
+	{{#if full}}
+		<strong>Full file URL</strong> <a href="{{full}}" target="_blank">{{full}}</a></br>
+	{{/if}}
 	<strong>Time created</strong> {{date created "h:mma"}}</br>
 	<strong>Date created</strong> {{date created "MMMM D, YYYY"}}</br>
 	<strong>Filesize</strong> {{fsize filesize}}</br>
