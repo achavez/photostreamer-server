@@ -21,7 +21,7 @@ app.engine('html', require('ejs').__express);
 
 // Photostream viewer page
 app.get('/', function(req, res){
-	res.render('photo-stream.html');
+	res.render('photostream.html');
 });
 
 // Return a list of requested high-resolution photos
@@ -144,8 +144,22 @@ backend.use(backboneio.middleware.mongooseStore(models.Thumbnail));
 var io = backboneio.listen(server, {
 	photos: backend
 });
+
+// Remove thumbs when a dump is requested
 io.sockets.on('connection', function(socket) {
-	console.log('Someone just connected.');
+	socket.on('dump', function(fn) {
+		console.log("Dumping thumbs from database");
+		var remove = models.Thumbnail.find({}).remove();
+		remove.exec(function (err, docs) {
+			if(err) {
+				console.error(err);
+				fn(false);	
+			}
+			else {
+				fn(true);
+			}
+		});
+	});
 });
 
 // Fire up the app and listen for incoming requests

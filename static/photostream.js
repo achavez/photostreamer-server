@@ -62,10 +62,41 @@ var Photos = Backbone.Collection.extend({
 				});			
 			}
 		});
+
+		this.on("reset", function() {
+			if(typeof window.inspectorView != 'undefined') {
+				window.inspectorView.$el.html(window.inspectorView.empty);
+			}
+		});
 	},
 	comparator: function(photo) {
 		var created = photo.get('created');
 		return -moment(created).unix();
+	},
+	dump: function() {
+		this.reset();
+		socket.emit('dump', function(success) {
+			if(success) {
+				new PNotify({
+					title: 'Database reset',
+					text: 'The database is now empty. New photos will show as they arrive.',
+					type: 'success',
+					desktop: {
+						desktop: true
+					}
+				});
+			}
+			else {
+				new PNotify({
+					title: 'Error dumping database',
+					text: 'There was a problem dumping the photo database. Try refreshing your browser and try again.',
+					type: 'error',
+					desktop: {
+						desktop: true
+					}
+				});
+			}
+		});
 	}
 });
 
@@ -86,8 +117,10 @@ var PhotoView = Backbone.View.extend({
 		this.model.request();
 	},
 	inspect: function() {
-		window.inspectorView = new InspectorView({model: this.model});
-		window.inspectorView.render();
+		window.inspectorView = new InspectorView({
+			model: this.model,
+			el: $("#inspector")
+		});
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
@@ -98,6 +131,10 @@ var PhotoView = Backbone.View.extend({
 var InspectorView = Backbone.View.extend({
 	initialize: function() {
 		this.template = Templates.inspector;
+
+		this.setElement(this.el);
+		this.empty = this.$el.html();
+		this.render();
 
 		this.model.on("sync", function() {
 			this.render();
@@ -111,24 +148,36 @@ var InspectorView = Backbone.View.extend({
 	},
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		$("#inspector").html(this.el);
 	}
 });
 
 var PhotostreamView = Backbone.View.extend({
 	initialize: function() {
+		this.setElement(this.el);
+		this.empty = this.$el.html();
+		this.render();
+
 		this.collection.on("add", function(photo) {
 			var el = this.renderSingle(photo);
 			this.$el.prepend(el);
 			fixHeights(true);
 		}, this);
+
+		this.collection.on("reset", function() {
+			this.render();
+		}, this);
 	},
 	render: function(){
-		this.collection.forEach(function(photo) {
-			var el = this.renderSingle(photo);
-			this.$el.append(el);
-		}, this);
-		return this;
+		if(this.collection.length > 0) {
+			this.$el.html('');
+			this.collection.forEach(function(photo) {
+				var el = this.renderSingle(photo);
+				this.$el.append(el);
+			}, this);
+		}
+		else {
+			this.$el.html(this.empty);
+		}
 	},
 	renderSingle: function(photo){
 		var photoView = new PhotoView({model: photo});
@@ -138,10 +187,10 @@ var PhotostreamView = Backbone.View.extend({
 
 var DownloadsView = Backbone.View.extend({
 	initialize: function() {
-		var source = $("#downloads-template").html();
 		this.template = Templates.download;
 
 		this.setElement(this.el);
+		this.empty = this.$el.html();
 		this.render();
 
 		this.collection.on("add", function(download) {
@@ -156,6 +205,10 @@ var DownloadsView = Backbone.View.extend({
 				this.render();
 			}
 		}, this);
+
+		this.collection.on("reset", function() {
+			this.render();
+		}, this);
 	},
 	addSingle: function(download) {
 		var el = this.renderSingle(download);
@@ -165,12 +218,20 @@ var DownloadsView = Backbone.View.extend({
 		return this.template(download.toJSON());
 	},
 	render: function() {
-		this.$el.html('');
+		var empty = true;
+		var downloads;
 		this.collection.forEach(function(download) {
 			if(download.get('full')) {
-				this.$el.append(this.renderSingle(download));
+				empty = false;
+				downloads = downloads + this.renderSingle(download);
 			}
 		}, this);
+		if(empty) {
+			this.$el.html(this.empty);
+		}
+		else {
+			this.$el.html(downloads);
+		}
 	}
 });
 
@@ -216,10 +277,15 @@ $(function() {
 	window.photos = new Photos();
 	window.photos.fetch({
 		success: function() {
-			var photostreamView = new PhotostreamView({collection: photos});
-			$('#photos').append(photostreamView.render().el);
+			var photostreamView = new PhotostreamView({
+				collection: photos,
+				el: $("#photos")
+			});
 			fixHeights(false);
-			var downloadsView = new DownloadsView({collection: photos, el: $("#downloads")});
+			var downloadsView = new DownloadsView({
+				collection: photos,
+				el: $("#downloads")
+			});
 		}
 	});
 	// Re-layout images on window resize
@@ -227,13 +293,24 @@ $(function() {
 		fixHeights(true);
 	}, 500));
 	// Setup desktop notifications
-	var permissionButton = $("#enable-notifications");
+	var permissionsBox = $("#enable-notifications");
 	if(PNotify.desktop.checkPermission()) {
-		permissionButton.click(function() {
+		permissionsBox.on("click", "button", function() {
 			PNotify.desktop.permission();
-			this.remove();
+			permissionsBox.remove();
 		});
 	} else {
-		permissionButton.remove();
+		permissionsBox.remove();
 	}
+	// Empty photo database
+	$("#confirm-delete").on("click", ".cancel", function() {
+		$(this).closest(".alert").addClass("hidden");
+	}).on("click", ".confirm", function() {
+		console.log('deleting');
+		window.photos.dump();
+		$(this).closest(".alert").addClass("hidden");
+	});
+	$("#delete-photos").click(function() {
+		$("#confirm-delete").removeClass("hidden");
+	});
 });

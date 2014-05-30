@@ -60,6 +60,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
           'static/jquery/dist/jquery.min.js',
+          'static/bootstrap/dist/js/bootstrap.min.js',
           'static/pnotify/pnotify.min.js',
           'static/momentjs/min/moment.min.js',
           'static/filesize/lib/filesize.min.js',
