@@ -1,7 +1,7 @@
 /* Fire up Websockets */
 var socket = Backbone.io.connect();
 
-/* Connection indicators, error handling */
+/* Connection indicators, connection error handling */
 socket.on("connect", function() {
 	$(".disconnected").addClass("hidden");
 	$(".connected").removeClass("hidden");
@@ -77,7 +77,7 @@ var PhotoView = Backbone.View.extend({
 			this.render();
 		}, this);
 	},
-	className: 'col-xs-12 col-sm-6 col-md-4 col-lg-3',
+	className: 'photo col-xs-12 col-sm-6 col-md-4 col-lg-3',
 	events: {
 		"click .request-full": "request",
 		"click .inspect": "inspect"
@@ -120,6 +120,7 @@ var PhotostreamView = Backbone.View.extend({
 		this.collection.on("add", function(photo) {
 			var el = this.renderSingle(photo);
 			this.$el.prepend(el);
+			fixHeights(true);
 		}, this);
 	},
 	render: function(){
@@ -173,6 +174,42 @@ var DownloadsView = Backbone.View.extend({
 	}
 });
 
+/* Function to equalize panel heights for better readability    */
+/* idea from http://css-tricks.com/equal-height-blocks-in-rows/ */
+var fixHeights = function(reflow) {
+	var currentTallest = 0, currentRowStart = 0,
+	rowDivs = [], $el, topPosition = 0;
+	var photos = $('#photos .photo');
+	photos.imagesLoaded(function () {
+		if(reflow) {
+			photos.height('auto');
+		}
+		photos.each(function() {
+			$el = $(this);
+			topPostion = $el.position().top;
+			if (currentRowStart != topPostion) {
+				// we just came to a new row.  Set all the heights on the completed row
+				for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+					rowDivs[currentDiv].height(currentTallest);
+				}
+				// set the variables for the new row
+				rowDivs.length = 0; // empty the array
+				currentRowStart = topPostion;
+				currentTallest = $el.height();
+				rowDivs.push($el);
+			} else {
+				// another div on the current row.  Add it to the list and check if it's taller
+				rowDivs.push($el);
+				currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+			}
+			// do the last row
+			for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+				rowDivs[currentDiv].height(currentTallest);
+			}
+		});
+	});
+}
+
 $(function() {
 	// Populate the Backbone collection and fire up the views
 	window.photos = new Photos();
@@ -180,9 +217,14 @@ $(function() {
 		success: function() {
 			var photostreamView = new PhotostreamView({collection: photos});
 			$('#photos').append(photostreamView.render().el);
+			fixHeights(false);
 			var downloadsView = new DownloadsView({collection: photos, el: $("#downloads")});
 		}
 	});
+	// Re-layout images on window resize
+	$(window).resize(_.debounce(function(){
+		fixHeights(true);
+	}, 500));
 	// Setup desktop notifications
 	var permissionButton = $("#enable-notifications");
 	if(PNotify.desktop.checkPermission()) {

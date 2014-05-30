@@ -55,6 +55,7 @@ module.exports = function(grunt) {
           'static/backbone/backbone.js',
           'node_modules/backbone.io/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js',
           'node_modules/backbone.io/lib/browser.js',
+          'static/imagesloaded/imagesloaded.pkgd.js',
           'static/photostream.js'
         ],
         dest: 'static/client.js',

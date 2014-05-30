@@ -40,7 +40,7 @@ app.get('/requests/:sender', function(req, res) {
 	})
 });
 
-// 
+// Stream photo downloads and set the apporpriate headers
 app.get('/download/:id', function(req, res) {
 	var id = req.param('id');
 	models.Thumbnail.findOne({'_id': id}, function(err, thumb) {
