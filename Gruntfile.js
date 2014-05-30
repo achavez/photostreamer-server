@@ -36,6 +36,22 @@ module.exports = function(grunt) {
         }
       }
     },
+    // Minify .js
+    uglify: {
+      options: {
+        sourceMap: true
+      },
+      client: {
+        files: {
+          'static/pnotify/pnotify.min.js': ['static/pnotify/pnotify.core.js', 'static/pnotify/pnotify.desktop.js'],
+          'static/handlebars-templates/handlebars-templates.min.js': ['static/handlebars-templates/helpers.js', 'static/handlebars-templates/templates.js'],
+          'static/underscore/underscore.min.js': 'static/underscore/underscore.js',
+          'static/backbone/backbone.min.js': 'static/backbone/backbone.js',
+          'node_modules/backbone.io/lib/browser.min.js': 'node_modules/backbone.io/lib/browser.js',
+          'static/photostream.min.js': 'static/photostream.js'
+        }
+      }
+    },
     // Concatenate .js
     concat: {
       options: {
@@ -43,35 +59,21 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'static/jquery/dist/jquery.js',
-          'static/pnotify/pnotify.core.js',
-          'static/pnotify/pnotify.desktop.js',
-          'static/momentjs/moment.js',
-          'static/filesize/lib/filesize.js',
-          'static/handlebars/handlebars.js',
-          'static/handlebars-templates/helpers.js',
-          'static/handlebars-templates/templates.js',
-          'static/underscore/underscore.js',
-          'static/backbone/backbone.js',
-          'node_modules/backbone.io/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js',
-          'node_modules/backbone.io/lib/browser.js',
-          'static/imagesloaded/imagesloaded.pkgd.js',
-          'static/photostream.js'
+          'static/jquery/dist/jquery.min.js',
+          'static/pnotify/pnotify.min.js',
+          'static/momentjs/min/moment.min.js',
+          'static/filesize/lib/filesize.min.js',
+          'static/handlebars/handlebars.min.js',
+          'static/handlebars-templates/handlebars-templates.min.js',
+          'static/underscore/underscore.min.js',
+          'static/backbone/backbone.min.js',
+          'node_modules/backbone.io/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.min.js',
+          'node_modules/backbone.io/lib/browser.min.js',
+          'static/imagesloaded/imagesloaded.pkgd.min.js',
+          'static/photostream.min.js'
         ],
         dest: 'static/client.js',
       },
-    },
-    // Minify .js
-    uglify: {
-      options: {
-        mangle: false,
-        sourceMap: true
-      },
-      client: {
-        files: {
-          'static/client.min.js': 'static/client.js'
-        }
-      }
     }
   });
 
@@ -82,6 +84,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task(s)
-  grunt.registerTask('default', ['less', 'handlebars', 'concat', 'uglify']);
+  grunt.registerTask('default', ['less', 'handlebars', 'uglify', 'concat']);
 
 };
