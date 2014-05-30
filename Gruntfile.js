@@ -38,10 +38,10 @@ module.exports = function(grunt) {
     },
     // Minify .js
     uglify: {
-      options: {
-        sourceMap: true
-      },
       client: {
+        options: {
+          preserveComments: false
+        },
         files: {
           'static/pnotify/pnotify.min.js': ['static/pnotify/pnotify.core.js', 'static/pnotify/pnotify.desktop.js'],
           'static/handlebars-templates/handlebars-templates.min.js': ['static/handlebars-templates/helpers.js', 'static/handlebars-templates/templates.js'],
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
     // Concatenate .js
     concat: {
       options: {
-        separator: ';',
+        separator: ';\n',
       },
       dist: {
         src: [
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
           'static/imagesloaded/imagesloaded.pkgd.min.js',
           'static/photostream.min.js'
         ],
-        dest: 'static/client.js',
+        dest: 'static/client.min.js',
       },
     }
   });

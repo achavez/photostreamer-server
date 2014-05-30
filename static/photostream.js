@@ -181,6 +181,7 @@ var fixHeights = function(reflow) {
 	rowDivs = [], $el, topPosition = 0;
 	var photos = $('#photos .photo');
 	photos.imagesLoaded(function () {
+		$("#photos").removeClass('loading');
 		if(reflow) {
 			photos.height('auto');
 		}

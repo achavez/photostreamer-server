@@ -16,9 +16,19 @@
 @import "bootswatch.less";
 
 // Finally, some app styles
+
+// Connection indicator
 .page-header {
 	.label {
 		top: -35px;
 		position: relative;
+	}
+}
+
+// Image loading indicator
+#photos {
+	transition: opacity 1s;
+	&.loading {
+		opacity: .25;
 	}
 }
