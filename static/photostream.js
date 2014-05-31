@@ -237,6 +237,25 @@ var DownloadsView = Backbone.View.extend({
 	}
 });
 
+// Counter for the number of photos in the stream
+var PhotoCountView = Backbone.View.extend({
+	initialize: function() {
+		this.setElement(this.el);
+		this.render();
+
+		this.collection.on("reset", function() {
+			this.render();
+		}, this);
+
+		this.collection.on("add", function() {
+			this.render();
+		}, this);
+	},
+	render: function() {
+		this.$el.text(this.collection.length);
+	}
+});
+
 /* Function to equalize panel heights for better readability    */
 /* idea from http://css-tricks.com/equal-height-blocks-in-rows/ */
 var fixHeights = function(reflow) {
@@ -287,6 +306,10 @@ $(function() {
 			var downloadsView = new DownloadsView({
 				collection: photos,
 				el: $("#downloads")
+			});
+			var photoCountView = new PhotoCountView({
+				collection: photos,
+				el: $("#count")
 			});
 		}
 	});
