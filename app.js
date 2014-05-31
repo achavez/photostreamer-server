@@ -16,12 +16,12 @@ app.use(express.static(__dirname + '/static'));
 app.use(logfmt.requestLogger());
 
 // View rendering
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').__express);
+app.engine('hbs', require('express3-handlebars')({extname:'hbs', defaultLayout:'main.hbs'}));
+app.set('view engine', 'hbs');
 
 // Photostream viewer page
 app.get('/', function(req, res){
-	res.render('photostream.html');
+	res.render('photostream.hbs');
 });
 
 // Return a list of requested high-resolution photos
