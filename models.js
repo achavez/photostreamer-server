@@ -1,10 +1,17 @@
 var mongoose = require('mongoose');
 
-var mongooseTypes = require("mongoose-types");
-mongooseTypes.loadTypes(mongoose, "Url");
-var Url = mongoose.SchemaTypes.Url;
+var validator = require('validator');
 
 var Schema = mongoose.Schema;
+
+// Validate URLs using validator.js
+var urlValidator = [function(val) {
+	return validator.isURL(val, {
+		protocols: ['http','https'],
+		require_tld: true,
+		require_protocol: true
+	});
+}, '{PATH} must be a valid http:// or https:// URL.']
 
 var thumbnailSchema = new Schema({
 	created: {
@@ -28,11 +35,13 @@ var thumbnailSchema = new Schema({
 		index: true
 	},
 	thumbnail: {
-		type: Url,
-		required: true
+		type: String,
+		required: true,
+		validate: urlValidator
 	},
 	full: {
-		type: Url
+		type: String,
+		validate: urlValidator
 	},
 	dimensions: {
 		width: {
