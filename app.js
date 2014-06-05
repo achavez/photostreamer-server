@@ -40,6 +40,7 @@ app.get('/requests/:sender', function(req, res) {
 	})
 });
 
+var https = require('https')
 // Stream photo downloads and set the apporpriate headers
 app.get('/download/:id', function(req, res) {
 	var id = req.param('id');
@@ -49,29 +50,41 @@ app.get('/download/:id', function(req, res) {
 			console.error(err);
 		}
 		else if (thumb) {
-			http.get(thumb.full, function(download) {
-				console.log("Initiating download for " + thumb.full);
-				res.attachment();
-				download.pipe(res, {end: false});
-				download.on('end', function() {
-					res.end();
-					thumb.downloaded = true;
-					thumb.save(function (err) {
-						if (err) {
-							console.error(err);
-						}
-						else {
-							backend.emit('updated', thumb);
-						}
-					});
+			var protocol = thumb.full.split('://')[0];
+			if(protocol == 'https') {
+				https.get(thumb.full, function(download) {
+					streamDownload(res, download, thumb);
 				});
-			});
+			}
+			else if(protocol == 'http') {
+				http.get(thumb.full, function(download) {
+					streamDownload(res, download, thumb);
+				});
+			}
 		}
 		else {
 			res.send(400, 'Photo with file ID ' + id + ' not found.');
 		}
 	});
 });
+
+function streamDownload(res, download, thumb) {
+	console.log("Initiating download for " + thumb.full);
+	res.attachment();
+	download.pipe(res, {end: false});
+	download.on('end', function() {
+		res.end();
+		thumb.downloaded = true;
+		thumb.save(function (err) {
+			if (err) {
+				console.error(err);
+			}
+			else {
+				backend.emit('updated', thumb);
+			}
+		});
+	});
+}
 
 // Make sure all POSTs are application/json
 app.use(function(req, res, next) {
