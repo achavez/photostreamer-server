@@ -18,7 +18,13 @@ To push a photo the server, upload a thumbnail to the Web, then send a `POST` wi
 		width: 1700,
 		height: 300
 	},
-	'thumbnail': 'http://aws.amazon.com/file.jpg'
+	'thumbnail': 'http://aws.amazon.com/file.jpg',
+	'exif': { // optional
+		'EXIF ColorSpace': 'sRGB',
+		'EXIF FocalLength': 24,
+		'Image make': 'Canon'
+		// etc.
+	}
 }
 ```
 

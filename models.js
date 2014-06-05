@@ -55,6 +55,9 @@ var thumbnailSchema = new Schema({
 			required: true
 		}
 	},
+	exif: {
+		type: Object
+	},
 	requested: {
 		type: Boolean,
 		required: true,

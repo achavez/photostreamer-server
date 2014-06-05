@@ -11,6 +11,10 @@
 	<strong>Date created</strong> {{date created "MMMM D, YYYY"}}</br>
 	<strong>Filesize</strong> {{fsize filesize}}</br>
 	<strong>Size</strong> {{dimensions.width}}px x {{dimensions.height}}px
+	{{#if exif}}
+		<h3>Metadata</h3>
+		{{#exif exif}}{{/exif}}
+	{{/if}}
 </p>
 {{#unless requested}}
 	<button type="button" class="btn btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>

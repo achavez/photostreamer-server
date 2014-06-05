@@ -50,11 +50,26 @@ function program1(depth0,data) {
 
 function program3(depth0,data) {
   
+  var buffer = "", stack1, helper, options;
+  buffer += "\n		<h3>Metadata</h3>\n		";
+  stack1 = (helper = helpers.exif || (depth0 && depth0.exif),options={hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data},helper ? helper.call(depth0, (depth0 && depth0.exif), options) : helperMissing.call(depth0, "exif", (depth0 && depth0.exif), options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n	";
+  return buffer;
+  }
+function program4(depth0,data) {
+  
+  var buffer = "";
+  return buffer;
+  }
+
+function program6(depth0,data) {
+  
   
   return "\n	<button type=\"button\" class=\"btn btn-primary request-full\"><i class=\"glyphicon glyphicon-import\"></i> Request file</button>\n";
   }
 
-function program5(depth0,data) {
+function program8(depth0,data) {
   
   var buffer = "", stack1, helper;
   buffer += "\n	<a href=\"/download/";
@@ -62,18 +77,18 @@ function program5(depth0,data) {
   else { helper = (depth0 && depth0._id); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\">\n		";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.downloaded), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.downloaded), {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n	</a>\n";
   return buffer;
   }
-function program6(depth0,data) {
+function program9(depth0,data) {
   
   
   return "\n			<button type=\"button\" class=\"btn btn-primary download\"><i class=\"glyphicon glyphicon-saved\"></i> Redownload</button>\n		";
   }
 
-function program8(depth0,data) {
+function program11(depth0,data) {
   
   
   return "\n			<button type=\"button\" class=\"btn btn-primary download\"><i class=\"glyphicon glyphicon-download-alt\"></i> Download</button>\n		";
@@ -108,11 +123,14 @@ function program8(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "px x "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px\n</p>\n";
-  stack1 = helpers.unless.call(depth0, (depth0 && depth0.requested), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+    + "px\n	";
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.exif), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</p>\n";
+  stack1 = helpers.unless.call(depth0, (depth0 && depth0.requested), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.full), {hash:{},inverse:self.noop,fn:self.program(5, program5, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.full), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   return buffer;
   });
