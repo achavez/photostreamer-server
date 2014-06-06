@@ -119,11 +119,7 @@ function program11(depth0,data) {
     + escapeExpression((helper = helpers.date || (depth0 && depth0.date),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.created), "MMMM D, YYYY", options) : helperMissing.call(depth0, "date", (depth0 && depth0.created), "MMMM D, YYYY", options)))
     + "</br>\n	<strong>Filesize</strong> "
     + escapeExpression((helper = helpers.fsize || (depth0 && depth0.fsize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.filesize), options) : helperMissing.call(depth0, "fsize", (depth0 && depth0.filesize), options)))
-    + "</br>\n	<strong>Size</strong> "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px x "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px\n	";
+    + "</br>\n	";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.exif), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</p>\n";
@@ -179,11 +175,7 @@ function program6(depth0,data) {
     + escapeExpression((helper = helpers.date || (depth0 && depth0.date),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.created), "h:mm:ssa M/D/YY", options) : helperMissing.call(depth0, "date", (depth0 && depth0.created), "h:mm:ssa M/D/YY", options)))
     + "</small></br>\n			<small><strong>Filesize</strong> "
     + escapeExpression((helper = helpers.fsize || (depth0 && depth0.fsize),options={hash:{},data:data},helper ? helper.call(depth0, (depth0 && depth0.filesize), options) : helperMissing.call(depth0, "fsize", (depth0 && depth0.filesize), options)))
-    + "</small></br>\n			<small><strong>Size</strong> "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.width)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px x "
-    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.dimensions)),stack1 == null || stack1 === false ? stack1 : stack1.height)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "px</small>\n		</p>\n		<div class=\"btn-group btn-group-xs\">\n			";
+    + "</small></br>\n		</p>\n		<div class=\"btn-group btn-group-xs\">\n			";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.requested), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n			";

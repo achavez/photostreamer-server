@@ -43,18 +43,6 @@ var thumbnailSchema = new Schema({
 		type: String,
 		validate: urlValidator
 	},
-	dimensions: {
-		width: {
-			type: Number,
-			min: 1,
-			required: true
-		},
-		height: {
-			type: Number,
-			min: 1,
-			required: true
-		}
-	},
 	exif: {
 		type: Object
 	},
