@@ -9,6 +9,8 @@
 3. To deploy to Heroku, you'll need to have the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed. Run `heroku login` and enter your Heroku account information.
 3. Run `heroku create` in the photostreamer-server folder created in step 1. That will add a Heroku [git remote](http://git-scm.com/book/en/Git-Basics-Working-with-Remotes), which will be used to push the app to Heroku. It will also generate a URL (something like http://still-refuge.herokuapp.com/), which is where your app will live in Heroku's cloud.
 4. Next, add a MongoDB to your add-on. For example, to add MongoHQ run `heroku addons:add mongohq`. The two supported options are [MongoHQ](https://addons.heroku.com/mongohq) and [MongoLab](https://addons.heroku.com/mongolab). Both have free tiers.
+5. Type `heroku labs:enable websockets` to enable Websockets. Using Websockets will increase the speed and efficiency at which the Heroku app communicates with anyone viewing the app in a Web browser.
+6. To deploy, run `git push heroku master` to push the app to Heroku. Once the push has completed, type `heroku open` to open your app in a Web browser. For more information about Heroku, visit the [Heroku Dev Center](https://devcenter.heroku.com/articles/quickstart).
 
 ## API
 
