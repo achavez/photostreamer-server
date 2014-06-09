@@ -4,6 +4,7 @@
   "description": "Displays photos stored on Amazon S3 that are being streamed live from the field.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
