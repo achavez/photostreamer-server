@@ -6,8 +6,10 @@ var bodyParser = require('body-parser');
 
 var models = require('./models');
 
+var mongoDb = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/photostreamer';
+
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/photostreamer');
+mongoose.connect(mongoDb);
 
 // Serve static files
 app.use(express.static(__dirname + '/static'));

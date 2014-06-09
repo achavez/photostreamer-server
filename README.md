@@ -2,9 +2,19 @@
 
 **Work in progress...** Description will go here.
 
-## Sending photos to the server
+## Server setup
+
+1. Clone this repository to your machine by running `git clone https://github.com/achavez/photostreamer-server.git`.
+2. If you don't have one, create a Heroku account. This app can run in Heroku's [free tier](https://www.heroku.com/pricing), but should run on any other Node.js environment that has access to MongoDB.
+3. To deploy to Heroku, you'll need to have the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed. Run `heroku login` and enter your Heroku account information.
+3. Run `heroku create` in the photostreamer-server folder created in step 1. That will add a Heroku [git remote](http://git-scm.com/book/en/Git-Basics-Working-with-Remotes), which will be used to push the app to Heroku. It will also generate a URL (something like http://still-refuge.herokuapp.com/), which is where your app will live in Heroku's cloud.
+4. Next, add a MongoDB to your add-on. For example, to add MongoHQ run `heroku addons:add mongohq`. The two supported options are [MongoHQ](https://addons.heroku.com/mongohq) and [MongoLab](https://addons.heroku.com/mongolab). Both have free tiers.
+
+## API
 
 #### Pushing thumbnails
+
+**For an example of how to send photos to the server, check out [photostreamer-pi](https://github.com/achavez/photostreamer-pi), which sends photos using a Raspberry Pi.**
 
 To push a photo the server, upload a thumbnail to the Web, then send a `POST` with a JSON-encoded body with the following information to `http://SERVER/photo/thumb`:
 
