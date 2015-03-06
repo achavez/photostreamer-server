@@ -6,7 +6,7 @@
     "express"
   ],
   "addons": [
-    "mongohq:sandbox"
+    "mongolab:sandbox"
   ],
   "env": {}
 }
