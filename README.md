@@ -4,6 +4,14 @@
 
 ## Server setup
 
+#### Heroku one-click setup
+
+The easiest way to setup the server is to use the button below to deploy to Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+#### Manual setup
+
 1. Clone this repository to your machine by running `git clone https://github.com/achavez/photostreamer-server.git`.
 2. If you don't have one, create a Heroku account. This app can run in Heroku's [free tier](https://www.heroku.com/pricing), but should run on any other Node.js environment that has access to MongoDB.
 3. To deploy to Heroku, you'll need to have the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed. Run `heroku login` and enter your Heroku account information.

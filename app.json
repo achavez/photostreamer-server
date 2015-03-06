@@ -1,0 +1,12 @@
+{
+  "name": "Photostreamer Server",
+  "description": "Displays photos stored on Amazon S3 that are being streamed live from the field.",
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "addons": [
+    "mongohq:sandbox"
+  ],
+  "env": {}
+}
