@@ -5,11 +5,12 @@ require([
 	'views/count',
 	'views/inspector',
 	'views/downloads',
+	'views/empty',
 	'lib/fixHeights',
 	'pnotify',
 	'pnotify.desktop',
 	'imagesLoaded'
-], function(moment, Templates, Photo, PhotoCountView, InspectorView, DownloadsView, fixHeights, PNotify) {
+], function(moment, Templates, Photo, PhotoCountView, InspectorView, DownloadsView, EmptyView, fixHeights, PNotify) {
 
 /* Fire up Websockets */
 var socket = Backbone.io.connect();
@@ -209,16 +210,11 @@ $(function() {
 	} else {
 		permissionsBox.remove();
 	}
-	// Empty photo database
-	$("#confirm-delete").on("click", ".cancel", function() {
-		$(this).closest(".alert").addClass("hidden");
-	}).on("click", ".confirm", function() {
-		console.log('deleting');
-		window.photos.dump();
-		$(this).closest(".alert").addClass("hidden");
-	});
-	$("#delete-photos").click(function() {
-		$("#confirm-delete").removeClass("hidden");
+
+	new EmptyView({
+		el: '#confirm-delete',
+		collection: window.photos,
+		trigger: '#delete-photos'
 	});
 });
 
