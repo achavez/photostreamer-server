@@ -1,10 +1,15 @@
 require([
 	'moment',
 	'tpl',
+	'models/photo',
+	'views/count',
+	'views/inspector',
+	'views/downloads',
+	'lib/fixHeights',
 	'pnotify',
 	'pnotify.desktop',
 	'imagesLoaded'
-], function(moment, Templates, PNotify) {
+], function(moment, Templates, Photo, PhotoCountView, InspectorView, DownloadsView, fixHeights, PNotify) {
 
 /* Fire up Websockets */
 var socket = Backbone.io.connect();
@@ -38,14 +43,6 @@ socket.on("reconnect", function() {
 			desktop: true
 		}
 	});
-});
-
-/* Backbone model stored in Mongo */
-var Photo = Backbone.Model.extend({
-	idAttribute: "_id",
-	request: function() {
-		this.save("requested", true, {wait: true});
-	}
 });
 
 /* Backbone collection bound to Mongo using Backbone.io */
@@ -137,29 +134,6 @@ var PhotoView = Backbone.View.extend({
 	}
 });
 
-var InspectorView = Backbone.View.extend({
-	initialize: function() {
-		this.template = Templates.inspector;
-
-		this.setElement(this.el);
-		this.empty = this.$el.html();
-		this.render();
-
-		this.model.on("sync", function() {
-			this.render();
-		}, this);
-	},
-	events: {
-		"click .request-full": "request"
-	},
-	request: function() {
-		this.model.request();
-	},
-	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
-	}
-});
-
 var PhotostreamView = Backbone.View.extend({
 	initialize: function() {
 		this.setElement(this.el);
@@ -183,6 +157,7 @@ var PhotostreamView = Backbone.View.extend({
 		}, this);
 	},
 	render: function(){
+
 		if(this.collection.length > 0) {
 			this.$el.html('');
 			this.collection.forEach(function(photo) {
@@ -199,108 +174,6 @@ var PhotostreamView = Backbone.View.extend({
 		return photoView.render().el;
 	}
 });
-
-var DownloadsView = Backbone.View.extend({
-	initialize: function() {
-		this.template = Templates.download;
-
-		this.setElement(this.el);
-		this.empty = this.$el.html();
-		this.render();
-
-		this.collection.on("change", function(download) {
-			if(download.hasChanged('full')) {
-				this.addSingle(download);
-			}
-			else if(download.hasChanged('downloaded')) {
-				this.render();
-			}
-		}, this);
-
-		this.collection.on("reset", function() {
-			this.render();
-		}, this);
-	},
-	addSingle: function(download) {
-		var el = this.renderSingle(download);
-		this.$el.prepend(el);
-	},
-	renderSingle: function(download) {
-		return this.template(download.toJSON());
-	},
-	render: function() {
-		var empty = true;
-		var downloads;
-		this.collection.forEach(function(download) {
-			if(download.get('full')) {
-				empty = false;
-				downloads = downloads + this.renderSingle(download);
-			}
-		}, this);
-		if(empty) {
-			this.$el.html(this.empty);
-		}
-		else {
-			this.$el.html(downloads);
-		}
-	}
-});
-
-// Counter for the number of photos in the stream
-var PhotoCountView = Backbone.View.extend({
-	initialize: function() {
-		this.setElement(this.el);
-		this.render();
-
-		this.collection.on("reset", function() {
-			this.render();
-		}, this);
-
-		this.collection.on("add", function() {
-			this.render();
-		}, this);
-	},
-	render: function() {
-		this.$el.text(this.collection.length);
-	}
-});
-
-/* Function to equalize panel heights for better readability    */
-/* idea from http://css-tricks.com/equal-height-blocks-in-rows/ */
-var fixHeights = function(reflow) {
-	var currentTallest = 0, currentRowStart = 0,
-	rowDivs = [], $el, topPosition = 0;
-	var photos = $('#photos .photo');
-	photos.imagesLoaded(function () {
-		$("#photos").removeClass('loading');
-		if(reflow) {
-			photos.height('auto');
-		}
-		photos.each(function() {
-			$el = $(this);
-			topPostion = $el.position().top;
-			if (currentRowStart != topPostion) {
-				// we just came to a new row.  Set all the heights on the completed row
-				for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
-					rowDivs[currentDiv].height(currentTallest);
-				}
-				// set the variables for the new row
-				rowDivs.length = 0; // empty the array
-				currentRowStart = topPostion;
-				currentTallest = $el.height();
-				rowDivs.push($el);
-			} else {
-				// another div on the current row.  Add it to the list and check if it's taller
-				rowDivs.push($el);
-				currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
-			}
-			// do the last row
-			for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
-				rowDivs[currentDiv].height(currentTallest);
-			}
-		});
-	});
-}
 
 $(function() {
 	// Populate the Backbone collection and fire up the views

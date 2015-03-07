@@ -17,7 +17,6 @@
     "pnotify": "~2.0.1",
     "imagesloaded": "~3.1.5",
     "almond": "~0.3.1",
-    "bootswatch-dist": "lumen",
     "bootswatch": "~3.3.2"
   }
 }
