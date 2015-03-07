@@ -3,27 +3,36 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    // Copy FontAwesome files to the fonts/ directory
+    copy: {
+      fonts: {
+        src: [
+          'bower_components/bootstrap/fonts/**'
+        ],
+        dest: 'static/fonts/',
+        flatten: true,
+        expand: true
+      }
+    },
+
     // Compile LESS
     less: {
-      compileBootstrap: {
-        files: {
-          "static/bootstrap/dist/css/bootstrap.css": "static/bootstrap/less/bootstrap.less"
-        }
-      },
       compileAppStyles: {
         options: {
           cleancss: true
         },
         files: {
-          "static/client.css": "static/client.less"
+          "static/client.css": "client/less/client.less"
         }
       }
     },
+
     // Compile Handlebars templates
     handlebars: {
       compile: {
         options: {
-          namespace: "Templates",
+          amd: '../templates/helpers',
           processName: function(filePath) {
             var pieces = filePath.split("/");
             var filename = pieces[pieces.length - 1];
@@ -32,26 +41,11 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "static/handlebars-templates/templates.js": "static/handlebars-templates/*.hbs"
+          "build/templates.js": "client/templates/**/*.hbs"
         }
       }
     },
-    // Minify .js
-    uglify: {
-      client: {
-        options: {
-          preserveComments: false
-        },
-        files: {
-          'static/pnotify/pnotify.min.js': ['static/pnotify/pnotify.core.js', 'static/pnotify/pnotify.desktop.js'],
-          'static/handlebars-templates/handlebars-templates.min.js': ['static/handlebars-templates/helpers.js', 'static/handlebars-templates/templates.js'],
-          'static/underscore/underscore.min.js': 'static/underscore/underscore.js',
-          'static/backbone/backbone.min.js': 'static/backbone/backbone.js',
-          'node_modules/backbone.io/lib/browser.min.js': 'node_modules/backbone.io/lib/browser.js',
-          'static/photostream.min.js': 'static/photostream.js'
-        }
-      }
-    },
+
     // Concatenate .js
     concat: {
       options: {
@@ -59,32 +53,43 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'static/jquery/dist/jquery.min.js',
-          'static/bootstrap/dist/js/bootstrap.min.js',
-          'static/pnotify/pnotify.min.js',
-          'static/momentjs/min/moment.min.js',
-          'static/filesize/lib/filesize.min.js',
-          'static/handlebars/handlebars.min.js',
-          'static/handlebars-templates/handlebars-templates.min.js',
-          'static/underscore/underscore.min.js',
-          'static/backbone/backbone.min.js',
-          'node_modules/backbone.io/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.min.js',
-          'node_modules/backbone.io/lib/browser.min.js',
-          'static/imagesloaded/imagesloaded.pkgd.min.js',
-          'static/photostream.min.js'
+          'bower_components/jquery/dist/jquery.js',
+          'bower_components/underscore/underscore.js',
+          'bower_components/backbone/backbone.js'
         ],
-        dest: 'static/client.min.js',
+        dest: 'static/backbone-bundle.js',
       },
+    },
+
+    // Build client bundle with r.js optimizer
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: 'client/js',
+          mainConfigFile: 'client/js/config.js',
+          out: 'static/client.js',
+          optimize: 'none',
+          optimize: 'uglify2',
+          include: [
+            'app'
+          ],
+          name: '../../bower_components/almond/almond',
+          generateSourceMaps: true,
+          preserveLicenseComments: false
+        }
+      }
     }
+
   });
 
   // Load plugins
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s)
-  grunt.registerTask('default', ['less', 'handlebars', 'uglify', 'concat']);
+  grunt.registerTask('default', ['copy', 'less', 'handlebars', 'concat', 'requirejs']);
 
 };

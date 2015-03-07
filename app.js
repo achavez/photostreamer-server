@@ -96,7 +96,7 @@ app.use(function(req, res, next) {
 				"error": {
 					"message": "Data must be submitted as application/json."
 				}
-			});		
+			});
 		}
 		else {
 			next();
@@ -168,7 +168,7 @@ io.sockets.on('connection', function(socket) {
 		remove.exec(function (err, docs) {
 			if(err) {
 				console.error(err);
-				fn(false);	
+				fn(false);
 			}
 			else {
 				fn(true);
