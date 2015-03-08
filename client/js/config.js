@@ -6,7 +6,7 @@ require.config({
     imagesLoaded: '../../bower_components/imagesloaded/imagesloaded.pkgd',
     handlebars: '../../bower_components/handlebars/handlebars',
     moment: '../../bower_components/momentjs/moment',
-    filesize: '../../bower_components/filesize/src/filesize',
+    filesize: '../../bower_components/filesize/lib/filesize',
     tpl: '../../build/templates',
     pnotify: '../../bower_components/pnotify/pnotify.core',
     'pnotify.desktop': '../../bower_components/pnotify/pnotify.desktop'
@@ -18,6 +18,9 @@ require.config({
     imagesLoaded: {
       deps: ['jquery'],
       exports: 'jQuery.fn.imagesLoaded'
+    },
+    filesize: {
+      exports: 'filesize'
     }
   },
   config: {

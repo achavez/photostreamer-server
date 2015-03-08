@@ -1,4 +1,4 @@
-define(['handlebars', 'moment', 'filesize'], function(Handlebars, _, moment, filesize) {
+define(['handlebars', 'moment', 'filesize'], function(Handlebars, moment, filesize) {
 
 	// Handle date formatting with Moment.js
 	Handlebars.registerHelper('date', function(time, format) {
@@ -9,7 +9,8 @@ define(['handlebars', 'moment', 'filesize'], function(Handlebars, _, moment, fil
 
 	// Format file sizes with filesize.js
 	Handlebars.registerHelper('fsize', function(bytes) {
-		return new Handlebars.SafeString(filesize(bytes));
+		var s = filesize(bytes);
+		return new Handlebars.SafeString(s);
 	});
 
 	// Sort and clean up EXIF data
