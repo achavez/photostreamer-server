@@ -2,56 +2,29 @@ require([
 	'moment',
 	'tpl',
 	'models/photo',
+	'models/connection',
 	'views/count',
 	'views/inspector',
 	'views/downloads',
 	'views/empty',
+	'views/connection',
 	'lib/fixHeights',
+	'lib/socket',
 	'pnotify',
 	'pnotify.desktop',
 	'imagesLoaded'
-], function(moment, Templates, Photo, PhotoCountView, InspectorView, DownloadsView, EmptyView, fixHeights, PNotify) {
-
-/* Fire up Websockets */
-var socket = Backbone.io.connect();
-
-/* Connection indicators, connection error handling */
-socket.on("connect", function() {
-	$(".disconnected").addClass("hidden");
-	$(".connected").removeClass("hidden");
-});
-socket.on("disconnect", function() {
-	$(".disconnected").removeClass("hidden");
-	$(".connected").addClass("hidden");
-	new PNotify({
-		title: 'Server connection lost',
-		text: 'New photos won\'t show and you won\'t be able to request photos until you\'re reconnected.',
-		type: 'error',
-		icon: 'glyphicon glyphicon-remove-circle',
-		desktop: {
-			desktop: true
-		}
-	});
-});
-socket.on("reconnect", function() {
-	window.photos.fetch();
-	new PNotify({
-		title: 'Server connection restored',
-		text: 'Everything should be back to normal.',
-		type: 'success',
-		icon: 'glyphicon glyphicon-ok-circle',
-		desktop: {
-			desktop: true
-		}
-	});
-});
+], function(moment, Templates, Photo, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, fixHeights, socket, PNotify) {
 
 /* Backbone collection bound to Mongo using Backbone.io */
 var Photos = Backbone.Collection.extend({
 	model: Photo,
 	backend: 'photos',
-	initialize: function() {
+	initialize: function(options) {
 		this.bindBackend();
+
+		this.connection = options.connection;
+
+		this.connection.on("reconnect", this.fetch, this);
 
 		this.on("change", function(photo) {
 			var changed = this.get(photo);
@@ -177,8 +150,12 @@ var PhotostreamView = Backbone.View.extend({
 });
 
 $(function() {
+	var connectionModel = new ConnectionModel();
+
 	// Populate the Backbone collection and fire up the views
-	window.photos = new Photos();
+	window.photos = new Photos({
+		connection: connectionModel
+	});
 	window.photos.fetch({
 		success: function() {
 			var photostreamView = new PhotostreamView({
@@ -201,6 +178,7 @@ $(function() {
 		fixHeights(true);
 	}, 500));
 	// Setup desktop notifications
+	/*
 	var permissionsBox = $("#enable-notifications");
 	if(PNotify.desktop.checkPermission()) {
 		permissionsBox.on("click", "button", function() {
@@ -210,11 +188,17 @@ $(function() {
 	} else {
 		permissionsBox.remove();
 	}
+	*/
 
 	new EmptyView({
 		el: '#confirm-delete',
 		collection: window.photos,
 		trigger: '#delete-photos'
+	});
+
+	new ConnectionView({
+		el: '#connection-status',
+		model: connectionModel
 	});
 });
 
