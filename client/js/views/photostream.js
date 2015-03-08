@@ -23,6 +23,11 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
       }, this);
 
       this.collection.on("reset", this.render, this);
+
+      // Re-layout images on window resize
+      $(window).resize(_.debounce(function(){
+        fixHeights(true);
+      }, 500));
     },
 
     render: function(){
@@ -36,6 +41,8 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
       else {
         this.$el.html(this.empty);
       }
+
+      fixHeights(false);
     },
 
     renderSingle: function(photo){

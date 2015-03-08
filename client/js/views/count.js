@@ -4,22 +4,17 @@ define(function() {
 
   // TODO: Don't use global Backbone
   return Backbone.View.extend({
-    
+
     initialize: function() {
-      this.setElement(this.el);
-      this.render();
-
-      this.collection.on("reset", function() {
-        this.render();
-      }, this);
-
-      this.collection.on("add", function() {
-        this.render();
-      }, this);
+      this.collection.once('sync', this.render, this);
+      this.collection.on('reset', this.render, this);
+      this.collection.on('add', this.render, this);
     },
 
     render: function() {
-      this.$el.text(this.collection.length);
+      var l = this.collection.length;
+
+      this.$el.text(l);
     }
 
   });

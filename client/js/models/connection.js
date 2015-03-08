@@ -1,4 +1,4 @@
-define(['lib/socket'], function(socket) {
+define(function() {
 
   'use strict';
 
@@ -7,10 +7,13 @@ define(['lib/socket'], function(socket) {
   return Backbone.Model.extend({
 
     initialize: function() {
+      // Setup a Backbone.io connection
+      this.socket = Backbone.io.connect();
+
       // Trigger Backbone events for socket events
-      socket.on('connect', this.connected.bind(this));
-      socket.on('disconnect', this.disconnected.bind(this));
-      socket.on('reconnect', this.reconnected.bind(this));
+      this.socket.on('connect', this.connected.bind(this));
+      this.socket.on('disconnect', this.disconnected.bind(this));
+      this.socket.on('reconnect', this.reconnected.bind(this));
     },
 
     connected: function() {
