@@ -8,13 +8,14 @@ require([
 	'views/downloads',
 	'views/empty',
 	'views/connection',
+	'views/photostream',
 	'lib/fixHeights',
 	'lib/socket',
 	'pnotify',
 	'pnotify.desktop',
 	'imagesLoaded',
 	'bootstrap.collapse'
-], function(moment, Templates, Photo, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, fixHeights, socket, PNotify) {
+], function(moment, Templates, Photo, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, PhotostreamView, fixHeights, socket, PNotify) {
 
 /* Backbone collection bound to Mongo using Backbone.io */
 var Photos = Backbone.Collection.extend({
@@ -49,12 +50,17 @@ var Photos = Backbone.Collection.extend({
 			}
 		});
 	},
+	inspect: function(photo) {
+		var toInspect = this.get(photo);
+		this.trigger('inspect', toInspect);
+	},
 	comparator: function(photo) {
 		var created = photo.get('created');
 		return -moment(created).unix();
 	},
 	dump: function() {
 		this.reset();
+		this.trigger('inspect', null);
 		socket.emit('dump', function(success) {
 			if(success) {
 				new PNotify({
@@ -77,76 +83,6 @@ var Photos = Backbone.Collection.extend({
 				});
 			}
 		});
-	}
-});
-
-var PhotoView = Backbone.View.extend({
-	initialize: function() {
-		this.template = Templates.photo;
-
-		this.model.on("sync", function() {
-			this.render();
-			fixHeights();
-		}, this);
-	},
-	className: 'photo col-xs-12 col-sm-6 col-md-4 col-lg-3',
-	events: {
-		"click .request-full": "request",
-		"click .inspect": "inspect"
-	},
-	request: function() {
-		this.model.request();
-	},
-	inspect: function() {
-		window.inspectorView = new InspectorView({
-			model: this.model,
-			el: $("#inspector")
-		});
-	},
-	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
-		return this;
-	}
-});
-
-var PhotostreamView = Backbone.View.extend({
-	initialize: function() {
-		this.setElement(this.el);
-		this.empty = this.$el.html();
-		this.render();
-
-		this.collection.on("add", function(photo) {
-			// If this is the first photo to be streamed,
-			// remove the empty text
-			if(this.collection.length == 1) {
-				this.$el.html('');
-			}
-
-			var el = this.renderSingle(photo);
-			this.$el.prepend(el);
-			fixHeights(true);
-		}, this);
-
-		this.collection.on("reset", function() {
-			this.render();
-		}, this);
-	},
-	render: function(){
-
-		if(this.collection.length > 0) {
-			this.$el.html('');
-			this.collection.forEach(function(photo) {
-				var el = this.renderSingle(photo);
-				this.$el.append(el);
-			}, this);
-		}
-		else {
-			this.$el.html(this.empty);
-		}
-	},
-	renderSingle: function(photo){
-		var photoView = new PhotoView({model: photo});
-		return photoView.render().el;
 	}
 });
 
@@ -200,6 +136,11 @@ $(function() {
 	new ConnectionView({
 		el: '#connection-status',
 		model: connectionModel
+	});
+
+	new InspectorView({
+		collection: window.photos,
+		el: $("#inspector")
 	});
 });
 
