@@ -12,7 +12,8 @@ require([
 	'lib/socket',
 	'pnotify',
 	'pnotify.desktop',
-	'imagesLoaded'
+	'imagesLoaded',
+	'bootstrap.collapse'
 ], function(moment, Templates, Photo, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, fixHeights, socket, PNotify) {
 
 /* Backbone collection bound to Mongo using Backbone.io */

@@ -9,7 +9,9 @@ require.config({
     filesize: '../../bower_components/filesize/lib/filesize',
     tpl: '../../build/templates',
     pnotify: '../../bower_components/pnotify/pnotify.core',
-    'pnotify.desktop': '../../bower_components/pnotify/pnotify.desktop'
+    'pnotify.desktop': '../../bower_components/pnotify/pnotify.desktop',
+    'bootstrap.collapse': '../../bower_components/bootstrap/js/collapse',
+    'bootstrap.transition': '../../bower_components/bootstrap/js/transition',
   },
   shim: {
     handlebars: {
@@ -21,6 +23,9 @@ require.config({
     },
     filesize: {
       exports: 'filesize'
+    },
+    'bootstrap.collapse': {
+      deps: ['jquery', 'bootstrap.transition']
     }
   },
   config: {
