@@ -14,15 +14,9 @@ require.config({
     'bootstrap.transition': '../../bower_components/bootstrap/js/transition',
   },
   shim: {
-    handlebars: {
-      exports: 'Handlebars'
-    },
     imagesLoaded: {
       deps: ['jquery'],
       exports: 'jQuery.fn.imagesLoaded'
-    },
-    filesize: {
-      exports: 'filesize'
     },
     'bootstrap.collapse': {
       deps: ['jquery', 'bootstrap.transition']
