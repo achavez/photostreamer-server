@@ -6,10 +6,12 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
 
   return Backbone.View.extend({
     initialize: function() {
-      this.setElement(this.el);
       this.empty = this.$el.html();
-      this.render();
 
+      // Render on first fetch
+      this.collection.once('sync', this.render, this);
+
+      // Add new photos one at a time
       this.collection.on("add", function(photo) {
         // If this is the first photo to be streamed,
         // remove the empty text
@@ -22,7 +24,8 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
         fixHeights(true);
       }, this);
 
-      this.collection.on("reset", this.render, this);
+      // When the database is dumped and starts fresh
+      this.collection.on('reset', this.render, this);
 
       // Re-layout images on window resize
       $(window).resize(_.debounce(function(){
@@ -31,18 +34,20 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
     },
 
     render: function(){
+      // If there are photos
       if(this.collection.length > 0) {
-        this.$el.html('');
+        this.$el.empty();
         this.collection.forEach(function(photo) {
           var el = this.renderSingle(photo);
           this.$el.append(el);
         }, this);
+
+        fixHeights(false);
       }
+      // Otherwise, show empty text
       else {
         this.$el.html(this.empty);
       }
-
-      fixHeights(false);
     },
 
     renderSingle: function(photo){

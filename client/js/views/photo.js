@@ -1,4 +1,4 @@
-define(['tpl', 'lib/fixHeights'], function(Templates, fixHeights) {
+define(['tpl', 'lib/fixHeights'], function(tpl, fixHeights) {
 
   'use strict';
 
@@ -7,13 +7,10 @@ define(['tpl', 'lib/fixHeights'], function(Templates, fixHeights) {
   return Backbone.View.extend({
 
     initialize: function() {
-      this.template = Templates.photo;
-
-      this.model.on("sync", function() {
-        this.render();
-        fixHeights();
-      }, this);
+      this.model.on('change', this.render, this);
     },
+
+    template: tpl.photo,
 
     className: 'photo col-xs-12 col-sm-6 col-md-4 col-lg-3',
 

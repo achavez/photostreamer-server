@@ -18,23 +18,6 @@ define(['models/photo', 'moment'], function(Photo, moment) {
       // dropped/re-established
       this.connection = options.connection;
       this.connection.on("reconnect", this.fetch, this);
-
-      // TODO: Untangle embedded logic here
-      this.on("change", function(photo) {
-        var changed = this.get(photo);
-        changed.trigger("sync");
-
-        if(photo.hasChanged('full')) {
-          new PNotify({
-            title: 'New download',
-            text: photo.get('fileid') + ' available for download.',
-            icon: 'glyphicon glyphicon-download-alt',
-            desktop: {
-              desktop: true
-            }
-          });
-        }
-      });
     },
 
     // Pluck a model from the collection for inspection; event will cause

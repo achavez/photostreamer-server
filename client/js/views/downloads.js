@@ -7,49 +7,40 @@ define(['tpl'], function(tpl) {
   return Backbone.View.extend({
 
     initialize: function() {
-      this.setElement(this.el);
       this.empty = this.$el.html();
-      this.render();
 
-      this.collection.on("change", function(download) {
-        if(download.hasChanged('full')) {
-          this.addSingle(download);
-        }
-        else if(download.hasChanged('downloaded')) {
+      // Render after the first fetch and on resets
+      this.collection.once('sync', this.render, this);
+      this.collection.on('reset', this.render, this);
+
+      // Re-render every time a download becomes available
+      this.collection.on('change', function(download) {
+        if(download.hasChanged('full') || download.hasChanged('downloaded')) {
           this.render();
         }
-      }, this);
-
-      this.collection.on("reset", function() {
-        this.render();
       }, this);
     },
 
     template: tpl.download,
 
-    addSingle: function(download) {
-      var el = this.renderSingle(download);
-      this.$el.prepend(el);
-    },
-
-    renderSingle: function(download) {
-      return this.template(download.toJSON());
-    },
-
+    // Render a row for each photo with an available download
     render: function() {
-      var empty = true;
-      var downloads;
-      this.collection.forEach(function(download) {
-        if(download.get('full')) {
-          empty = false;
-          downloads = downloads + this.renderSingle(download);
-        }
-      }, this);
-      if(empty) {
-        this.$el.html(this.empty);
+      var el = this.collection.chain()
+        .filter(function(photo) {
+          return photo.has('full');
+        })
+        .reduce(function(memo, download) {
+          return memo + this.template(download.toJSON());
+        }, '', this)
+        .value();
+
+      // Use the empty text if there are no downloads available
+      // (like after a DB dump)
+      if(el !== '') {
+        this.$el.html(downloads);
       }
       else {
-        this.$el.html(downloads);
+        this.$el.html(this.empty);
       }
     }
 

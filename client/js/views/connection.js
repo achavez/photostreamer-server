@@ -1,4 +1,4 @@
-define(['pnotify', 'pnotify.desktop'], function (PNotify) {
+define(function () {
 
   'use strict';
 
@@ -7,9 +7,9 @@ define(['pnotify', 'pnotify.desktop'], function (PNotify) {
   return Backbone.View.extend({
 
     initialize: function() {
-      this.model.on('connect', this.connected, this);
-      this.model.on('reconnect', this.reconnected, this);
-      this.model.on('disconnect', this.disconnected, this);
+      this.collection.connection.on('connect', this.connected, this);
+      this.collection.connection.on('reconnect', this.reconnected, this);
+      this.collection.connection.on('disconnect', this.disconnected, this);
     },
 
     connectedLabel: '<i class="glyphicon glyphicon-ok-circle"></i> Connected',
@@ -19,16 +19,6 @@ define(['pnotify', 'pnotify.desktop'], function (PNotify) {
       this.$el.html(this.disconnectedLabel);
       this.$el.removeClass('label-success');
       this.$el.addClass('label-danger');
-
-      new PNotify({
-        title: 'Server connection lost',
-        text: 'New photos won\'t show and you won\'t be able to request photos until you\'re reconnected.',
-        type: 'error',
-        icon: 'glyphicon glyphicon-remove-circle',
-        desktop: {
-          desktop: true
-        }
-      });
     },
 
     connected: function() {
@@ -39,16 +29,6 @@ define(['pnotify', 'pnotify.desktop'], function (PNotify) {
 
     reconnected: function() {
       this.connected();
-
-      new PNotify({
-        title: 'Server connection restored',
-        text: 'Everything should be back to normal.',
-        type: 'success',
-        icon: 'glyphicon glyphicon-ok-circle',
-        desktop: {
-          desktop: true
-        }
-      });
     }
 
   });

@@ -12,9 +12,7 @@ define(function() {
     },
 
     render: function() {
-      var l = this.collection.length;
-
-      this.$el.text(l);
+      this.$el.text(this.collection.length);
     }
 
   });
