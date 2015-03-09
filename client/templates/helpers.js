@@ -2,8 +2,8 @@ define(['handlebars', 'moment', 'filesize'], function(Handlebars, moment, filesi
 
 	// Handle date formatting with Moment.js
 	Handlebars.registerHelper('date', function(time, format) {
-		var time = moment(time);
-		var result = '<time datetime="' + time.toISOString() + '">' + time.format(format) + '</time>';
+		var timeObj = moment(time);
+		var result = '<time datetime="' + timeObj.toISOString() + '">' + timeObj.format(format) + '</time>';
 		return new Handlebars.SafeString(result);
 	});
 
@@ -52,7 +52,5 @@ define(['handlebars', 'moment', 'filesize'], function(Handlebars, moment, filesi
 		output += '</div>';
 		return new Handlebars.SafeString(output);
 	});
-
-	return Handlebars;
 
 });

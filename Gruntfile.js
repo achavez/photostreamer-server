@@ -16,9 +16,15 @@ module.exports = function(grunt) {
       }
     },
 
+    // Delete files before running a build
+    clean: {
+      css: ['static/fonts', 'static/client.css'],
+      js: ['static/*.js*', 'build/*.js']
+    },
+
     // Compile LESS
     less: {
-      compileAppStyles: {
+      client: {
         options: {
           cleancss: true
         },
@@ -30,9 +36,9 @@ module.exports = function(grunt) {
 
     // Compile Handlebars templates
     handlebars: {
-      compile: {
+      client: {
         options: {
-          amd: '../templates/helpers',
+          amd: ['handlebars', '../templates/helpers'],
           processName: function(filePath) {
             var pieces = filePath.split("/");
             var filename = pieces[pieces.length - 1];
@@ -46,12 +52,18 @@ module.exports = function(grunt) {
       }
     },
 
+    // Lint JavaScript
+    jshint: {
+      client: ['client/**/*.js'],
+      server: ['*.js']
+    },
+
     // Concatenate .js
     concat: {
       options: {
         separator: ';\n',
       },
-      dist: {
+      backboneio: {
         src: [
           'bower_components/jquery/dist/jquery.js',
           'bower_components/underscore/underscore.js',
@@ -63,12 +75,11 @@ module.exports = function(grunt) {
 
     // Build client bundle with r.js optimizer
     requirejs: {
-      compile: {
+      client: {
         options: {
           baseUrl: 'client/js',
           mainConfigFile: 'client/js/config.js',
           out: 'static/client.js',
-          optimize: 'none',
           optimize: 'uglify2',
           include: [
             'app'
@@ -78,6 +89,62 @@ module.exports = function(grunt) {
           preserveLicenseComments: false
         }
       }
+    },
+
+    // Use Node Inspector, available at http://127.0.0.1:8080/debug?port=5858
+    'node-inspector': {
+      dev: {}
+    },
+
+    // Start the node server app and restart when app code changes
+    nodemon: {
+      dev: {
+        script: 'app.js',
+        options: {
+          env: grunt.file.readJSON('.env'),
+          nodeArgs: ['--debug'],
+          stdout: false,
+          watch: ['app.js', 'models.js', 'views/**/*.hbs', '.env'],
+          callback: function (nodemon) {
+            // Don't log to the console
+            nodemon.on('log', function() {});
+
+            // Trigger a refresh on restart
+            nodemon.on('restart', function () {
+              setTimeout(function() {
+                require('fs').writeFileSync('.rebooted', 'rebooted');
+              }, 1000);
+            });
+          }
+        }
+      }
+    },
+
+    // Watch client-side code for changes and re-build as needed
+    watch: {
+      js: {
+        files: ['client/**/*.js', 'client/templates'],
+        tasks: ['build:js']
+      },
+      less: {
+        files: ['client/**/*.less'],
+        tasks: ['build:css']
+      },
+      // Only livereload when restart/build is complete
+      livereload: {
+        files: ['.rebooted', 'static/*.css', 'static/*.js'],
+        options: {
+          livereload: true
+        }
+      }
+    },
+
+    // Run server, client dev tasks concurrently
+    concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
+      dev: ['watch', 'nodemon', 'node-inspector']
     }
 
   });
@@ -88,8 +155,18 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-node-inspector');
 
-  // Default task(s)
-  grunt.registerTask('default', ['copy', 'less', 'handlebars', 'concat', 'requirejs']);
+  // Tasks
+  grunt.registerTask('build:js', ['jshint:client', 'clean:js', 'handlebars', 'concat', 'requirejs']);
+  grunt.registerTask('build:css', ['clean:css', 'copy', 'less']);
+  grunt.registerTask('build', ['build:js', 'build:css']);
+
+  grunt.registerTask('default', ['build', 'concurrent']);
 
 };

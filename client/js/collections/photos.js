@@ -66,4 +66,4 @@ define(['models/photo', 'moment'], function(Photo, moment) {
 
   });
 
-})
+});

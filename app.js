@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 var models = require('./models');
 
-var mongoDb = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/photostreamer';
+var mongoDb = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGODB_URL;
 
 var mongoose = require('mongoose');
 mongoose.connect(mongoDb);
@@ -23,7 +23,9 @@ app.set('view engine', 'hbs');
 
 // Photostream viewer page
 app.get('/', function(req, res){
-	res.render('photostream.hbs');
+	res.render('photostream.hbs', {
+		debug: global.v8debug !== "undefined"
+	});
 });
 
 // Return a list of requested high-resolution photos
@@ -39,10 +41,10 @@ app.get('/requests/:sender', function(req, res) {
 			});
 			res.json(200, thumbnails);
 		}
-	})
+	});
 });
 
-var https = require('https')
+var https = require('https');
 // Stream photo downloads and set the apporpriate headers
 app.get('/download/:id', function(req, res) {
 	var id = req.param('id');
@@ -121,7 +123,7 @@ app.post('/photo/thumb', function(req, res, next){
 		else {
 			res.send(200);
 			backend.emit('created', thumb);
-			console.log("Thumbnail " + thumb.fileid + " stored in the database.")
+			console.log("Thumbnail " + thumb.fileid + " stored in the database.");
 		}
 	});
 });
@@ -141,7 +143,7 @@ app.post('/photo/full', function(req, res, next) {
 					res.json(400, err);
 				}
 				else {
-					console.log("Full resolution photo for " + thumb.fileid + " submitted.")
+					console.log("Full resolution photo for " + thumb.fileid + " submitted.");
 					backend.emit('updated', thumb);
 					res.send(200);
 				}
@@ -178,7 +180,7 @@ io.sockets.on('connection', function(socket) {
 });
 
 // Fire up the app and listen for incoming requests
-var port = Number(process.env.PORT || 8080);
+var port = Number(process.env.PORT || 5000);
 server.listen(port, function() {
 	console.log("Listening on port " + port);
 });

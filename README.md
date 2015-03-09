@@ -71,6 +71,20 @@ For each requested photo, repeat the process followed with the thumbnails. Uploa
 
 You'll receive a `200` back on success.
 
+## Local development
+
+Packages are managed with Bower and Grunt. Client-side code is built using Grunt. To develop locally:
+
+1. `bower install && node install` to get depencies
+2. Make sure you have access to a MongoDB instance and place the connection string in a `.env` file in the project root, along with an optional port number:
+	```js
+	{
+		"MONGODB_URI": "mongodb://localhost/photostreamer"
+	}
+
+	```
+3. Run `grunt`, which will run the build process, auto-watch client files and re-build as needed and run the server app through Nodemon at http://localhost:5000. It'll also start a Node Inspector instance at http://127.0.0.1:8080/debug?port=5858
+
 ## License
 
 The MIT License (MIT)

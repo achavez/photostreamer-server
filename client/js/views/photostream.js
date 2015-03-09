@@ -52,4 +52,4 @@ define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
 
   });
 
-})
+});

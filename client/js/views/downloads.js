@@ -55,4 +55,4 @@ define(['tpl'], function(tpl) {
 
   });
 
-})
+});

@@ -1,4 +1,4 @@
-define(['../templates/helpers'], function(Handlebars) {
+define(['handlebars', '../templates/helpers'], function(Handlebars) {
 
 this["JST"] = this["JST"] || {};
 

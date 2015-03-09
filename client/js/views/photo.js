@@ -37,4 +37,4 @@ define(['tpl', 'lib/fixHeights'], function(Templates, fixHeights) {
 
   });
 
-})
+});

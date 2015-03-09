@@ -11,7 +11,7 @@ var urlValidator = [function(val) {
 		require_tld: true,
 		require_protocol: true
 	});
-}, '{PATH} must be a valid http:// or https:// URL.']
+}, '{PATH} must be a valid http:// or https:// URL.'];
 
 var thumbnailSchema = new Schema({
 	created: {

@@ -30,3 +30,6 @@ node_modules
 
 # Bower components
 bower_components/
+
+# Server reboot flag
+.rebooted
