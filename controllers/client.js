@@ -9,7 +9,7 @@ var models = require('../models'),
 
 exports.home = function(req, res){
   res.render('photostream.hbs', {
-    debug: global.v8debug !== "undefined"
+    debug: process.env.NODE_ENV !== "production"
   });
 }
 

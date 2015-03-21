@@ -8,5 +8,7 @@
   "addons": [
     "mongolab:sandbox"
   ],
-  "env": {}
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
