@@ -5,7 +5,7 @@ var https = require('https'),
     http = require('http');
 
 var models = require('../models'),
-    io = require('../lib/server').io;
+    primus = require('../lib/server').primus;
 
 exports.home = function(req, res){
   res.render('photostream.hbs', {
@@ -51,7 +51,7 @@ function streamDownload(res, download, thumb) {
         console.error(err);
       }
       else {
-        io.emit('updated', thumb);
+        primus.write({evt: 'photo:change', data: thumb});
       }
     });
   });

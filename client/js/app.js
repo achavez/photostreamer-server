@@ -55,7 +55,6 @@ require([
 			collection: photos
 		});
 
-		// Fetch the models
 		photos.fetch();
 	});
 

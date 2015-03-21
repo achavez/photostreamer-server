@@ -25,8 +25,8 @@ define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
       this.collection.on('dump:error', this.emptyError, this);
 
       // Notifications for connection events
-      this.collection.connection.on('reconnect', this.reconnected, this);
-      this.collection.connection.on('disconnect', this.disconnected, this);
+      this.collection.connection.on('reconnected', this.reconnected, this);
+      this.collection.connection.on('change:connected', this.disconnected, this);
     },
 
     defaults: {
@@ -70,7 +70,12 @@ define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
     /*
      * Notifications for Socket.io connection events
      */
-    disconnected: function() {
+    disconnected: function(conn) {
+      // Only fire if we've been disconnected
+      if(conn.get('connected') === true) {
+        return;
+      }
+
       new PNotify(_.extend({
         title: 'Server connection lost',
         text: 'New photos won\'t show and you won\'t be able to request photos until you\'re reconnected.',

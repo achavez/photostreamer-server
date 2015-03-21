@@ -8,16 +8,13 @@ define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment)
       // Store our socket connection and re-fetch if the connection is
       // dropped/re-established
       this.connection = options.connection;
-      this.connection.on('reconnect', this.fetch, this);
+      this.connection.on('reconnected', this.fetch, this);
 
-      // Duplicate important Backbone.io events with Socket.io
-      var self = this;
-      this.connection.socket.on('created', function(photo) {
-        self.add(photo);
-      });
-      this.connection.socket.on('updated', function(photo) {
-        self.add(photo, {merge: true});
-      });
+      // Listen for websocket updates
+      this.connection.on('photo:add', this.add, this);
+      this.connection.on('photo:change', function(photo) {
+        this.add(photo, {merge: true});
+      }, this);
     },
 
     // Pluck a model from the collection for inspection; event will cause

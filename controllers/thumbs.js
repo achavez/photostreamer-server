@@ -1,5 +1,5 @@
 var models = require('../models'),
-    server = require('../lib/server');
+    primus = require('../lib/server').primus;
 
 exports.requested = function(req, res) {
   models.Photo.find({ 'requested': true, 'full': null }, 'fileid', function (err, results) {
@@ -24,7 +24,7 @@ exports.thumbupload = function(req, res, next){
     }
     else {
       res.send(200);
-      server.io.emit('created', thumb);
+      primus.write({evt: 'photo:add', data: thumb});
       console.log("Thumbnail " + thumb.fileid + " stored in the database.");
     }
   });
@@ -45,7 +45,7 @@ exports.fullupload = function(req, res, next) {
         }
         else {
           console.log("Full resolution photo for " + thumb.fileid + " submitted.");
-          server.io.emit('updated', thumb);
+          primus.write({evt: 'photo:change', data: thumb});
           res.send(200);
         }
       });
