@@ -37,7 +37,7 @@ define(['tpl'], function(tpl) {
       // Use the empty text if there are no downloads available
       // (like after a DB dump)
       if(el !== '') {
-        this.$el.html(downloads);
+        this.$el.html(el);
       }
       else {
         this.$el.html(this.empty);
