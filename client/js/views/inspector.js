@@ -26,8 +26,10 @@ define(['tpl'], function(tpl) {
     // the model changes
     activate: function(model) {
       // The inspector is being cleared
-      if(typeof this.inspecting !== "undefined" && model === null) {
-        this.inspecting.off('sync', this.render, this);
+      if(model === null) {
+        if(typeof this.inspecting !== "undefined") {
+          this.inspecting.off('sync', this.render, this);
+        }
         return;
       }
 

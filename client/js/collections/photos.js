@@ -39,10 +39,11 @@ define(['models/photo', 'moment'], function(Photo, moment) {
       var self = this;
       this.connection.socket.emit('dump', function(success) {
         if(success) {
-          self.collection.trigger('dump:success');
+          self.trigger('dump:success');
+          self.reset();
         }
         else {
-          self.collection.trigger('dump:error');
+          self.trigger('dump:error');
         }
       });
     }
