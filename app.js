@@ -1,6 +1,7 @@
 var logfmt = require('logfmt'),
 		bodyParser = require('body-parser'),
 		express = require('express'),
+		restify = require('express-restify-mongoose'),
 		mongoose = require('mongoose');
 
 var models = require('./models'),
@@ -20,6 +21,11 @@ app.use(logfmt.requestLogger());
 // View rendering
 app.engine('hbs', require('express3-handlebars')({extname:'hbs', defaultLayout:'main.hbs'}));
 app.set('view engine', 'hbs');
+
+// Auto-restify the Mongoose models
+var router = express.Router();
+restify.serve(router, models.Photo);
+app.use(router);
 
 // Photostream viewer page
 app.get('/', controllers.client.home);

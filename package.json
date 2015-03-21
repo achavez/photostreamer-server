@@ -17,6 +17,7 @@
     "backbone.io": "^0.4.1",
     "body-parser": "^1.2.0",
     "express": "^4.3.0",
+    "express-restify-mongoose": "^0.7.4",
     "express3-handlebars": "^0.5.0",
     "logfmt": "^1.1.2",
     "mongoose": "^3.8.11",
