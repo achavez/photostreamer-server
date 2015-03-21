@@ -46,7 +46,7 @@ app.post('/photo/full', controllers.thumbs.fullupload);
 server.io.sockets.on('connection', function(socket) {
 	socket.on('dump', function(fn) {
 		console.log("Dumping thumbs from database");
-		var remove = models.Thumbnail.find({}).remove();
+		var remove = models.Photo.find({}).remove();
 		remove.exec(function (err, docs) {
 			if(err) {
 				console.error(err);

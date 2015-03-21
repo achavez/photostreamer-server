@@ -1,9 +1,11 @@
 /*
  * Routes for the Backbone.js client app
  */
-var https = require('https');
+var https = require('https'),
+    http = require('http');
 
-var models = require('../models');
+var models = require('../models'),
+    backend = require('../lib/server').backend;
 
 exports.home = function(req, res){
   res.render('photostream.hbs', {
@@ -13,7 +15,7 @@ exports.home = function(req, res){
 
 exports.download = function(req, res) {
   var id = req.param('id');
-  models.Thumbnail.findOne({'_id': id}, function(err, thumb) {
+  models.Photo.findOne({'_id': id}, function(err, thumb) {
     if (err) {
       res.send(500, err);
       console.error(err);

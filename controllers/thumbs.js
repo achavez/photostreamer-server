@@ -2,7 +2,7 @@ var models = require('../models'),
     server = require('../lib/server');
 
 exports.requested = function(req, res) {
-  models.Thumbnail.find({ 'requested': true, 'full': null }, 'fileid', function (err, results) {
+  models.Photo.find({ 'requested': true, 'full': null }, 'fileid', function (err, results) {
     if (err) {
       console.error(err);
     }
@@ -16,7 +16,7 @@ exports.requested = function(req, res) {
 }
 
 exports.thumbupload = function(req, res, next){
-  var thumb = new models.Thumbnail(req.body);
+  var thumb = new models.Photo(req.body);
   thumb.save(function (err) {
     if (err) {
       res.json(400, err);
@@ -31,7 +31,7 @@ exports.thumbupload = function(req, res, next){
 };
 
 exports.fullupload = function(req, res, next) {
-  models.Thumbnail.findOne({fileid: req.body.fileid, sender: req.body.sender}, function (err, thumb) {
+  models.Photo.findOne({fileid: req.body.fileid, sender: req.body.sender}, function (err, thumb) {
     if (err) {
       res.json(400, err);
       console.error(err);
