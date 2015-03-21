@@ -6,9 +6,8 @@ var logfmt = require('logfmt'),
 		mongoose = require('mongoose');
 
 var models = require('./models'),
-		server = require('./lib/server'),
-		router = require('./lib/router'),
-		app = server.app;
+		app = require('./lib/server').app,
+		router = require('./lib/router');
 
 var mongoDb = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGODB_URL;
 mongoose.connect(mongoDb);
@@ -33,20 +32,3 @@ restify.serve(router, models.Photo, {lowercase: true});
 
 // Add Express router
 app.use(router);
-
-// Remove thumbs when a dump is requested
-server.io.sockets.on('connection', function(socket) {
-	socket.on('dump', function(fn) {
-		console.log("Dumping thumbs from database");
-		var remove = models.Photo.find({}).remove();
-		remove.exec(function (err, docs) {
-			if(err) {
-				console.error(err);
-				fn(false);
-			}
-			else {
-				fn(true);
-			}
-		});
-	});
-});

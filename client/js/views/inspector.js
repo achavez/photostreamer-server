@@ -8,6 +8,7 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
       this.empty = this.$el.html();
 
       this.collection.on('inspect', this.render, this);
+      this.collection.on('reset', this.clear, this);
     },
 
     template: tpl.inspector,
@@ -20,22 +21,23 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
       this.inspecting.request();
     },
 
-    // Listen for changes to the active model and stop listening when
-    // the model changes
-    activate: function(model) {
-      // The inspector is being cleared
-      if(model === null) {
-        if(typeof this.inspecting !== "undefined") {
-          this.inspecting.off('sync', this.render, this);
-        }
-        return;
-      }
-
-      // Unsubscribe before switching items because this isn't the first
-      // to be inspected
+    // Unsubscribe before switching items in the inspector
+    _unsubscribe: function() {
       if(typeof this.inspecting !== "undefined") {
         this.inspecting.off('change', this.render, this);
       }
+    },
+
+    // Clear the inspector when the collection is reset
+    clear: function() {
+      this._unsubscribe();
+      this.$el.html(this.empty);
+    },
+
+    // Listen for changes to the active model and stop listening when
+    // the model changes
+    activate: function(model) {
+      this._unsubscribe();
 
       this.inspecting = model;
       this.inspecting.on('change', this.render, this);
@@ -44,13 +46,7 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
     render: function(model) {
       this.activate(model);
 
-      // If null is passed, revert to empty text
-      if(model !== null) {
-        this.$el.html(this.template(model.toJSON()));
-      }
-      else {
-        this.$el.html(this.empty);
-      }
+      this.$el.html(this.template(model.toJSON()));
     }
 
   });

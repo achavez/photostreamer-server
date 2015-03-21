@@ -4,10 +4,10 @@ define(['backbone'], function(Backbone) {
 
   return Backbone.Model.extend({
 
-    idAttribute: "_id",
+    idAttribute: '_id',
 
     request: function() {
-      this.save("requested", true, {wait: true});
+      this.save('requested', true, {wait: true});
     }
 
   });

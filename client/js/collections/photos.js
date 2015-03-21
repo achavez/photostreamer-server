@@ -4,10 +4,6 @@ define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment)
 
   return Backbone.Collection.extend({
 
-    model: Photo,
-
-    backend: 'photos',
-
     initialize: function(options) {
       // Store our socket connection and re-fetch if the connection is
       // dropped/re-established
@@ -36,22 +32,22 @@ define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment)
       return -moment(photo.get('created')).unix();
     },
 
+    model: Photo,
+
     // URL to the express-restify-mongoose API
-    url: 'api/v1/photos',
+    url: '/api/v1/photos',
 
     // Empty the database
     dump: function() {
-      this.trigger('inspect', null);
-
-      var self = this;
-      this.connection.socket.emit('dump', function(success) {
-        if(success) {
-          self.trigger('dump:success');
-          self.reset();
-        }
-        else {
-          self.trigger('dump:error');
-        }
+      // Send a DELETE to remove all models from the server
+      this.sync('delete', this, {
+        success: function(ctx) {
+          this.reset();
+          this.trigger('dump:success');
+        }.bind(this),
+        error: function() {
+          this.trigger('dump:error');
+        }.bind(this)
       });
     }
 
