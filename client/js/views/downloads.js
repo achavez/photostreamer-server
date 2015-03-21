@@ -1,8 +1,6 @@
-define(['tpl'], function(tpl) {
+define(['backbone', 'tpl'], function(Backbone, tpl) {
 
   'use strict';
-
-  // TODO: Don't use global Backbone
 
   return Backbone.View.extend({
 

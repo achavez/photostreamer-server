@@ -24,7 +24,7 @@ app.set('view engine', 'hbs');
 
 // Auto-restify the Mongoose models
 var router = express.Router();
-restify.serve(router, models.Photo);
+restify.serve(router, models.Photo, {lowercase: true});
 app.use(router);
 
 // Photostream viewer page

@@ -58,21 +58,6 @@ module.exports = function(grunt) {
       server: ['*.js']
     },
 
-    // Concatenate .js
-    concat: {
-      options: {
-        separator: ';\n',
-      },
-      backboneio: {
-        src: [
-          'bower_components/jquery/dist/jquery.js',
-          'bower_components/underscore/underscore.js',
-          'bower_components/backbone/backbone.js'
-        ],
-        dest: 'static/backbone-bundle.js',
-      },
-    },
-
     // Build client bundle with r.js optimizer
     requirejs: {
       client: {
@@ -152,7 +137,6 @@ module.exports = function(grunt) {
   // Load plugins
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -163,7 +147,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-node-inspector');
 
   // Tasks
-  grunt.registerTask('build:js', ['jshint:client', 'clean:js', 'handlebars', 'concat', 'requirejs']);
+  grunt.registerTask('build:js', ['jshint:client', 'clean:js', 'handlebars', 'requirejs']);
   grunt.registerTask('build:css', ['clean:css', 'copy', 'less']);
   grunt.registerTask('build', ['build:js', 'build:css']);
 

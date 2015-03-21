@@ -1,7 +1,7 @@
 require.config({
   paths: {
-//    backbone: '../../bower_components/backbone/backbone',
-//    underscore: '../../bower_components/underscore/underscore',
+    backbone: '../../bower_components/backbone/backbone',
+    underscore: '../../bower_components/underscore/underscore',
     jquery: '../../bower_components/jquery/dist/jquery',
     imagesLoaded: '../../bower_components/imagesloaded/imagesloaded.pkgd',
     handlebars: '../../bower_components/handlebars/handlebars',

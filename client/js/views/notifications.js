@@ -1,8 +1,6 @@
-define(['pnotify', 'pnotify.desktop'], function(PNotify) {
+define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
 
   'use strict';
-
-  // TODO: Don't use global Backbone or Underscore
 
   return Backbone.View.extend({
 

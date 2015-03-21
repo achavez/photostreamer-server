@@ -1,8 +1,6 @@
-define(['models/photo', 'moment'], function(Photo, moment) {
+define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment) {
 
   'use strict';
-
-  // TODO: Don't use global Backbone
 
   return Backbone.Collection.extend({
 
@@ -11,13 +9,19 @@ define(['models/photo', 'moment'], function(Photo, moment) {
     backend: 'photos',
 
     initialize: function(options) {
-      // Setup Backbone.io bidnings
-      this.bindBackend();
-
       // Store our socket connection and re-fetch if the connection is
       // dropped/re-established
       this.connection = options.connection;
-      this.connection.on("reconnect", this.fetch, this);
+      this.connection.on('reconnect', this.fetch, this);
+
+      // Duplicate important Backbone.io events with Socket.io
+      var self = this;
+      this.connection.socket.on('created', function(photo) {
+        self.add(photo);
+      });
+      this.connection.socket.on('updated', function(photo) {
+        self.add(photo, {merge: true});
+      });
     },
 
     // Pluck a model from the collection for inspection; event will cause
@@ -31,6 +35,9 @@ define(['models/photo', 'moment'], function(Photo, moment) {
     comparator: function(photo) {
       return -moment(photo.get('created')).unix();
     },
+
+    // URL to the express-restify-mongoose API
+    url: 'api/v1/photos',
 
     // Empty the database
     dump: function() {

@@ -1,6 +1,4 @@
-define(['tpl'], function(tpl) {
-
-  // TODO: Don't use global Backbone
+define(['backbone', 'tpl'], function(Backbone, tpl) {
 
   'use strict';
 

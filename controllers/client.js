@@ -5,7 +5,7 @@ var https = require('https'),
     http = require('http');
 
 var models = require('../models'),
-    backend = require('../lib/server').backend;
+    io = require('../lib/server').io;
 
 exports.home = function(req, res){
   res.render('photostream.hbs', {
@@ -51,7 +51,7 @@ function streamDownload(res, download, thumb) {
         console.error(err);
       }
       else {
-        backend.emit('updated', thumb);
+        io.emit('updated', thumb);
       }
     });
   });

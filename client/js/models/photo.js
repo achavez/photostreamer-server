@@ -1,6 +1,4 @@
-define(function() {
-
-  // TODO: Don't use global Backbone
+define(['backbone'], function(Backbone) {
 
   'use strict';
 

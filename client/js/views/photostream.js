@@ -1,8 +1,6 @@
-define(['views/photo', 'lib/fixHeights'], function(PhotoView, fixHeights) {
+define(['backbone', 'views/photo', 'lib/fixHeights'], function(Backbone, PhotoView, fixHeights) {
 
   'use strict';
-
-  // TODO: Don't use global Backbone
 
   return Backbone.View.extend({
     initialize: function() {

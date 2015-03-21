@@ -24,7 +24,7 @@ exports.thumbupload = function(req, res, next){
     }
     else {
       res.send(200);
-      server.backend.emit('created', thumb);
+      server.io.emit('created', thumb);
       console.log("Thumbnail " + thumb.fileid + " stored in the database.");
     }
   });
@@ -45,7 +45,7 @@ exports.fullupload = function(req, res, next) {
         }
         else {
           console.log("Full resolution photo for " + thumb.fileid + " submitted.");
-          server.backend.emit('updated', thumb);
+          server.io.emit('updated', thumb);
           res.send(200);
         }
       });

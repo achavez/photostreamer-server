@@ -1,8 +1,6 @@
-define(['tpl', 'lib/fixHeights'], function(tpl, fixHeights) {
+define(['backbone', 'tpl', 'lib/fixHeights'], function(Backbone, tpl, fixHeights) {
 
   'use strict';
-
-  // TODO: Don't use global Backbone
 
   return Backbone.View.extend({
 

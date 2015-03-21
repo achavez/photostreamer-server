@@ -1,8 +1,7 @@
-define(function() {
+define(['backbone'], function(Backbone) {
 
   'use strict';
 
-  // TODO: Don't use global Backbone
   return Backbone.View.extend({
 
     initialize: function() {
