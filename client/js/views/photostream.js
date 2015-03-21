@@ -26,6 +26,8 @@ define(['backbone', 'views/photo'], function(Backbone, PhotoView) {
     },
 
     render: function(){
+      this.$el.removeClass('loading');
+
       // If there are photos
       if(this.collection.length > 0) {
         this.$el.empty();
