@@ -3,33 +3,28 @@
 // --------------------------------------------------
 
 // Core mixins from Bootstrap
-@import "../../bower_components/bootstrap/less/mixins.less";
+@import "../../bower_components/bootstrap/less/mixins";
 
 // And then import Bootstrap
-@import "../../bower_components/bootstrap/less/bootstrap.less";
+@import "../../bower_components/bootstrap/less/bootstrap";
 
 // Override it with a Bootswatch theme
-@import "../../bower_components/bootswatch/lumen/bootswatch.less";
-@import "../../bower_components/bootswatch/lumen/variables.less";
+@import "../../bower_components/bootswatch/lumen/bootswatch";
+@import "../../bower_components/bootswatch/lumen/variables";
 
 // Pnotify CSS
 @import (inline) "../../bower_components/pnotify/pnotify.core.css";
 
-// Finally, some app styles
+// App style modules
+@import "photostream";
+
+// Misc. app styles
 
 // Connection indicator
 .page-header {
 	.label {
 		top: -35px;
 		position: relative;
-	}
-}
-
-// Image loading indicator
-#photos {
-	transition: opacity 1s;
-	&.loading {
-		opacity: .25;
 	}
 }
 

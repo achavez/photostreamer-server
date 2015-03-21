@@ -1,4 +1,4 @@
-define(['backbone', 'tpl', 'lib/fixHeights'], function(Backbone, tpl, fixHeights) {
+define(['backbone', 'tpl'], function(Backbone, tpl) {
 
   'use strict';
 

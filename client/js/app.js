@@ -8,10 +8,9 @@ require([
 	'views/connection',
 	'views/photostream',
 	'views/notifications',
-	'lib/fixHeights',
 	'imagesLoaded',
 	'bootstrap.collapse'
-], function(PhotosCollection, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, PhotostreamView, NotificationsView, fixHeights) {
+], function(PhotosCollection, ConnectionModel, PhotoCountView, InspectorView, DownloadsView, EmptyView, ConnectionView, PhotostreamView, NotificationsView) {
 
 	$(function() {
 		// Setup the Backbone photos collection and connection model
