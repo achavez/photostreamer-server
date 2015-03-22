@@ -11,49 +11,59 @@ var urlValidator = [function(val) {
 }, '{PATH} must be a valid http:// or https:// URL.'];
 
 var photoSchema = new mongoose.Schema({
+
   created: {
     type: Date,
     default: Date.now
   },
+
   sender: {
     type: Number,
     required: true,
     min: 0,
     index: true
   },
+
   filesize: {
     type: Number,
     required: true,
     min: 1
   },
+
   fileid: {
     type: String,
     required: true,
     index: true
   },
+
   thumbnail: {
     type: String,
     required: true,
     validate: urlValidator
   },
+
   full: {
     type: String,
     validate: urlValidator
   },
+
   exif: {
     type: Object
   },
+
   requested: {
     type: Boolean,
     required: true,
     default: false,
     index: true
   },
+
   downloaded: {
     type: Boolean,
     required: true,
     default: false
   }
+
 });
 
 module.exports = mongoose.model('Photo', photoSchema);

@@ -1,12 +1,11 @@
 var logfmt = require('logfmt'),
+		express = require('express'),
 		bodyParser = require('body-parser'),
 		methodOverride = require('method-override'),
-		express = require('express'),
-		restify = require('express-restify-mongoose'),
 		mongoose = require('mongoose');
 
-var models = require('./models'),
-		app = require('./lib/server').app,
+var app = require('./lib/server').app,
+		api = require('./lib/api'),
 		router = require('./lib/router');
 
 var mongoDb = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || process.env.MONGODB_URL;
@@ -27,8 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 
-// Auto-restify Mongoose models
-restify.serve(router, models.Photo, {lowercase: true});
+// Setup RESTful API with Restify
+app.use(api);
 
-// Add Express router
+// Add Express router for client and old API routes
 app.use(router);
