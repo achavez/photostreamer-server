@@ -14,7 +14,7 @@ module.exports = function(req, res, next) {
   var key = req.header('Authorization');
 
   if(typeof key === 'undefined') {
-    return res.send(400, 'An API key is required.');
+    return res.status(400).send('An API key is required.');
   }
 
   User.findByKey(key, function(err, user) {
@@ -25,7 +25,7 @@ module.exports = function(req, res, next) {
       next();
     }
     else {
-      res.send(401, 'Invalid API key.');
+      res.status(401).send('Invalid API key.');
     }
   });
 };

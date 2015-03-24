@@ -15,13 +15,18 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.2.0",
+    "connect-mongo": "^0.7.0",
+    "emailjs": "^0.3.13",
     "engine.io": "^1.5.1",
     "express": "^4.3.0",
     "express-restify-mongoose": "^0.7.4",
+    "express-session": "^1.10.4",
     "express3-handlebars": "^0.5.0",
     "logfmt": "^1.1.2",
     "method-override": "^2.3.2",
     "mongoose": "^3.8.11",
+    "passwordless": "^1.0.9",
+    "passwordless-mongostore": "^0.1.0",
     "primus": "^2.4.12",
     "validator": "^3.12.0"
   },

@@ -6,9 +6,25 @@
     "express"
   ],
   "addons": [
-    "mongolab:sandbox"
+    "mongolab:sandbox",
+    "mailgun:starter"
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "APP_NAME": {
+      "description": "The same app name you entered above (if you didn't enter one, you should).",
+      "required": true
+    },
+    "HTTP_URL": {
+      "description": "If you plan to serve Photostreamer at a URL other than its .herokuapp.com address, enter its http:// version here."
+    },
+    "HTTPS_URL": {
+      "description": "And provide the https:// version here. Otherwise we'll direct SSL traffic to the .herokuapp.com address."
+    },
+    "SESSION_SECRET": {
+      "description": "A secret key for verifying the integrity of signed cookies. Don't change this unless you know what you're doing.",
+      "generator": "secret",
+      "required": true
+    }
   }
 }
