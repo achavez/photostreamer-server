@@ -2,9 +2,21 @@ var passwordless = require('passwordless'),
     models = require('../models');
 
 // Login form
-exports.login = function(req, res, next) {
-  res.render('login.hbs');
-};
+//
+// Redirects to home page if the user is alredy logged in
+exports.login = [
+  function(req, res, next) {
+    if(req.hasOwnProperty('user')) {
+      res.redirect('/');
+    }
+    else {
+      next();
+    }
+  },
+  function(req, res, next) {
+    res.render('login.hbs');
+  }
+];
 
 // Logout handler
 exports.logout = [

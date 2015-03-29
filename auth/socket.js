@@ -3,6 +3,7 @@ var session = require('express-session'),
 
 var config = require('../lib/config');
 
+// This needs to match lib/session.js
 var store = new MongoStore({
   url: config.dbUrl
 });
@@ -19,6 +20,8 @@ var store = new MongoStore({
 module.exports = function (req, next) {
   // Get the session ID from the cookies (parsed by earlier
   // cookie-parser middleware)
+  //
+  // This needs to match lib/session.js
   var sid = req.signedCookies['connect.sid'];
 
   // If there's no session cookie, move on
