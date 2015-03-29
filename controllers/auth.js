@@ -23,12 +23,12 @@ exports.sendtoken = function(req, res, next) {
       if(user) {
         cb(null, user.id);
         res.render('login.hbs', {
-          msg: 'Your login e-mail is on the way. Click the link to be logged in.'
+          success: true
         });
       }
       else {
         res.render('login.hbs', {
-          msg: 'A user with that e-mail address wasn\'t found.'
+          err: true
         });
       }
     });

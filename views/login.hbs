@@ -1,9 +1,27 @@
-<h1>Login</h1>
-{{#if msg}}
-  <p>{{msg}}</p>
-{{/if}}
-<form action="/login" method="POST">
-  Email:
-  <br><input name="user" type="text">
-  <br><input type="submit" value="Login">
-</form>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4 col-sm-push-2 col-md-push-3 col-lg-push-4">
+      <div class="page-header">
+        <h1>Login</h1>
+        <p>Enter your e-mail below to receive a one-time login link in your e-mail. Click the link to be immediately logged in to the dashboard.</p>
+      </div>
+      {{#if err}}
+        <div class="alert alert-danger" role="alert">
+          A user with that e-mail address wasn't found.
+        </div>
+      {{/if}}
+      {{#if success}}
+        <div class="alert alert-success" role="alert">
+          Your login e-mail is on the way.
+        </div>
+      {{else}}
+        <form action="/login" class="form" method="POST">
+          <div class="form-group form-group-lg{{#if err}} has-error{{/if}}">
+            <input id="user" class="form-control input-lg" name="user" type="text" placeholder="email@example.com">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+      {{/if}}
+    </div>
+  </div>
+</div>
