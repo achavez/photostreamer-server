@@ -3,13 +3,15 @@ var User = require('../models').User,
 
 /*
  * Middleware for all API requests that looks for a token
- * parameter and validates it against the list of authorized
+ * in the header and validates it against the list of authorized
  * users, returning an error if it's invalid.
  */
 module.exports = function(req, res, next) {
-  // TODO: Skip validation based on header if there's already a
-  // user set meaning (meaning this is probably a Web request
-  // that's already authed)
+  // Skip header authorization for users with an active passwordless
+  // session
+  if(typeof req.user !== 'undefined') {
+    return next();
+  }
 
   var key = req.header('Authorization');
 
@@ -21,7 +23,7 @@ module.exports = function(req, res, next) {
     if(err) return next(err);
 
     if(user) {
-      req.user = user;
+      req.user = user.id;
       next();
     }
     else {
