@@ -6,17 +6,13 @@ exports.login = function(req, res, next) {
   res.render('login.hbs');
 };
 
-// Routes based on whether the user was found in the system
-exports.found = function(req, res, next) {
-  res.render('login.hbs', {
-    msg: 'Found.'
-  });
-};
-exports.notfound = function(req, res, next) {
-  res.render('login.hbs', {
-    msg: 'Not found.'
-  });
-};
+// Logout handler
+exports.logout = [
+  passwordless.logout(),
+  function(req, res) {
+    res.redirect('/');
+  }
+];
 
 // POST route that causes passwordless to send the token
 exports.sendtoken = function(req, res, next) {
@@ -26,10 +22,14 @@ exports.sendtoken = function(req, res, next) {
 
       if(user) {
         cb(null, user.id);
-        res.redirect('/login/found');
+        res.render('login.hbs', {
+          msg: 'Your login e-mail is on the way. Click the link to be logged in.'
+        });
       }
       else {
-        res.redirect('/login/notfound');
+        res.render('login.hbs', {
+          msg: 'A user with that e-mail address wasn\'t found.'
+        });
       }
     });
   })(req, res, next);

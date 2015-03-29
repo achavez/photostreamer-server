@@ -2,7 +2,8 @@ var logfmt = require('logfmt'),
 		express = require('express'),
 		bodyParser = require('body-parser'),
 		mongoose = require('mongoose'),
-		methodOverride = require('method-override');
+		methodOverride = require('method-override'),
+		passwordless = require('passwordless');
 
 var app = require('./lib/server').app,
 		api = require('./lib/api'),
@@ -35,9 +36,12 @@ app.use(methodOverride());
 // Session middleware
 app.use(session);
 
+// Authorization for Web interface
+app.use(passwordless.sessionSupport());
+app.use('/login', passwordless.acceptToken({ successRedirect: '/'}));
+
 // Setup RESTful API with Restify
 app.use(api);
 
 // Add Express router for client and old API routes
-app.use(auth.web);
 app.use(router);
