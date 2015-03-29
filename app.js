@@ -40,7 +40,7 @@ app.use(session);
 app.use(passwordless.sessionSupport());
 app.use('/login', passwordless.acceptToken({ successRedirect: '/'}));
 
-// Hydrate user date in req.locals
+// Hydrate user data in req.locals
 app.use(auth.hydrate);
 
 // Setup RESTful API with Restify

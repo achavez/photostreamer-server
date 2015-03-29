@@ -1,6 +1,8 @@
 {
   "name": "Photostreamer Server",
   "description": "Displays photos stored on Amazon S3 that are being streamed live from the field.",
+  "repository": "https://github.com/achavez/photostreamer-server",
+  "success_url": "/login",
   "keywords": [
     "node",
     "express"
@@ -9,6 +11,9 @@
     "mongolab:sandbox",
     "mailgun:starter"
   ],
+  "scripts": {
+    "postdeploy": "node lib/init"
+  },
   "env": {
     "NODE_ENV": "production",
     "APP_NAME": {
@@ -25,6 +30,12 @@
       "description": "A secret key for verifying the integrity of signed cookies. Don't change this unless you know what you're doing.",
       "generator": "secret",
       "required": true
+    },
+    "FIRST_USER_NAME": {
+      "description": "The name for the first user account. This can be changed later."
+    },
+    "FIRST_USER_EMAIL": {
+      "description": "The e-mail address for the first user account. You'll need access to this address to login for the first time."
     }
   }
 }
