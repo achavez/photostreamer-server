@@ -27,7 +27,7 @@ define(['marionette', 'tpl'], function(Marionette, tpl) {
     },
 
     inspect: function() {
-      this.model.collection.inspect(this.model);
+      this.triggerMethod('photo:inspect');
     }
 
   });

@@ -17,13 +17,6 @@ define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment)
       }, this);
     },
 
-    // Pluck a model from the collection for inspection; event will cause
-    // photo to render in InspectorView
-    inspect: function(photo) {
-      var toInspect = this.get(photo);
-      this.trigger('inspect', toInspect);
-    },
-
     // Sort by creation time in descending order
     comparator: function(photo) {
       return -moment(photo.get('created')).unix();

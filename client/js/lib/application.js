@@ -1,4 +1,4 @@
-define(['marionette', 'layouts/stream', 'backbone', 'collections/photos', 'models/connection'], function(Marionette, StreamLayout, Backbone, PhotosCollection, ConnectionModel) {
+define(['marionette', 'backbone', 'collections/photos', 'models/connection'], function(Marionette, Backbone, PhotosCollection, ConnectionModel) {
 
   'use strict';
 
@@ -7,17 +7,21 @@ define(['marionette', 'layouts/stream', 'backbone', 'collections/photos', 'model
   app.on('start', function() {
     Backbone.history.start();
 
-    app.photos.fetch();
+    app.data.photos.fetch();
   });
 
-  app.connection = new ConnectionModel();
+  app.data = {};
 
   // Setup the Backbone photos collection and connection model
-  app.photos = new PhotosCollection(null, {
-    connection: app.connection
+  app.data.connection = new ConnectionModel();
+
+  app.data.photos = new PhotosCollection(null, {
+    connection: app.data.connection
   });
 
-  app.stream = new StreamLayout();
+  app.addRegions({
+    main: '#main'
+  });
 
   return app;
 
