@@ -1,6 +1,7 @@
 require.config({
   paths: {
     backbone: '../../bower_components/backbone/backbone',
+    marionette: '../../bower_components/marionette/lib/backbone.marionette',
     underscore: '../../bower_components/underscore/underscore',
     jquery: '../../bower_components/jquery/dist/jquery',
     imagesLoaded: '../../bower_components/imagesloaded/imagesloaded.pkgd',
@@ -12,6 +13,7 @@ require.config({
     'pnotify.desktop': '../../bower_components/pnotify/pnotify.desktop',
     'bootstrap.collapse': '../../bower_components/bootstrap/js/collapse',
     'bootstrap.transition': '../../bower_components/bootstrap/js/transition',
+    'bootstrap.modal': '../../bower_components/bootstrap/js/modal'
   },
   shim: {
     imagesLoaded: {
@@ -20,6 +22,9 @@ require.config({
     },
     'bootstrap.collapse': {
       deps: ['jquery', 'bootstrap.transition']
+    },
+    'bootstrap.modal': {
+      deps: ['jquery']
     }
   },
   config: {

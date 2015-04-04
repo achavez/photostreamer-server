@@ -5,18 +5,6 @@ define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
   return Backbone.View.extend({
 
     initialize: function() {
-      // Check if the browser supports desktop notifications; if it does,
-      // show a prompt to enable
-      if(PNotify.desktop.checkPermission()) {
-        this.$el.on('click', 'button', function() {
-          PNotify.desktop.permission();
-          this.$el.remove();
-        });
-      }
-      else {
-        this.$el.remove();
-      }
-
       // When a full download becomes available, trigger a notification
       this.collection.on('change', this.downloadAvailable, this);
 

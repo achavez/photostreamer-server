@@ -16,69 +16,7 @@
 			<i class="glyphicon glyphicon-flash"></i> Connecting to server
 		</span>
 	</div>
-	<div class="row">
-		<div class="col-xs-12 col-sm-4 col-sm-push-8">
-			<div id="enable-notifications">
-				<button type="button" class="btn btn-primary btn-block"><i class="glyphicon glyphicon-comment"></i> Enable desktop notifications</button>
-				<p class="text-center">
-					<small>Requires a <a href="http://caniuse.com/notifications" target="_blank">modern Web browser</a>.</small>
-				</p>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Inspector</h3>
-				</div>
-				<div class="panel-body">
-					<div id="inspector">
-						<p>Click <button type="button" class="inspect btn btn-default btn-xs"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button> on a photo to open it here.</p>
-					</div>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Available downloads</h3>
-				</div>
-				<div class="panel-body">
-					<table class="table table-condensed">
-						<thead>
-							<tr>
-								<th></th>
-								<th>File ID</th>
-								<th>Filesize</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody id="downloads">
-							<tr>
-								<td colspan="4">There aren't any photos available for download yet.</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<button id="delete-photos" type="button" class="btn btn-danger btn-block"><i class="glyphicon glyphicon-trash"></i> Empty photo database</button>
-			<br />
-		</div>
-		<div class="col-xs-12 col-sm-8 col-sm-pull-4">
-			<div id="confirm-delete" class="hidden alert alert-danger">
-				<h4>Are you sure you want to empty the database?</h4>
-				<p>Emptying the database won't actually delete the files from the server where they're stored, it'll just delete them from this viewer app.</p>
-				<br />
-				<p>
-					<button type="button" class="confirm btn btn-default"><i class="glyphicon glyphicon-trash"></i> Empty the database</button>
-					<button type="button" class="cancel btn btn-default">Cancel</button>
-				</p>
-			</div>
-			<div id="photos" class="row loading">
-				<div class="col-xs-12">
-					<div class="jumbotron">
-						<h1><small><i class="glyphicon glyphicon-picture"></i></small> No photos</h1>
-						<p>Photos will show here as soon as they arrive.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div id="main"></div>
 </div>
 {{#if debug}}
 	<script src="//localhost:35729/livereload.js"></script>

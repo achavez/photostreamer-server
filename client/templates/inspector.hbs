@@ -1,29 +1,40 @@
-<p>
-	<img class="img-responsive" src="{{thumbnail}}" />
-</p>
-<p>
-	<strong>File ID</strong> {{fileid}}</br>
-	<strong>Thumbnail URL</strong> <a href="{{thumbnail}}" target="_blank">{{thumbnail}}</a></br>
-	{{#if full}}
-		<strong>Full file URL</strong> <a href="{{full}}" target="_blank">{{full}}</a></br>
-	{{/if}}
-	<strong>Time created</strong> {{date created "h:mma"}}</br>
-	<strong>Date created</strong> {{date created "MMMM D, YYYY"}}</br>
-	<strong>Filesize</strong> {{fsize filesize}}</br>
-	{{#if exif}}
-		<h3>Metadata</h3>
-		{{#exif exif}}{{/exif}}
-	{{/if}}
-</p>
-{{#unless requested}}
-	<button type="button" class="btn btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
-{{/unless}}
-{{#if full}}
-	<a href="/download/{{_id}}">
-		{{#if downloaded}}
-			<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-saved"></i> Redownload</button>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Inspector</h3>
+	</div>
+	<div class="panel-body">
+		{{#if _id}}
+			<p>
+				<img class="img-responsive" src="{{thumbnail}}" />
+			</p>
+			<p>
+				<strong>File ID</strong> {{fileid}}</br>
+				<strong>Thumbnail URL</strong> <a href="{{thumbnail}}" target="_blank">{{thumbnail}}</a></br>
+				{{#if full}}
+				<strong>Full file URL</strong> <a href="{{full}}" target="_blank">{{full}}</a></br>
+				{{/if}}
+				<strong>Time created</strong> {{date created "h:mma"}}</br>
+				<strong>Date created</strong> {{date created "MMMM D, YYYY"}}</br>
+				<strong>Filesize</strong> {{fsize filesize}}</br>
+				{{#if exif}}
+				<h3>Metadata</h3>
+				{{#exif exif}}{{/exif}}
+				{{/if}}
+			</p>
+			{{#unless requested}}
+			<button type="button" class="btn btn-primary request-full"><i class="glyphicon glyphicon-import"></i> Request file</button>
+			{{/unless}}
+			{{#if full}}
+			<a href="/download/{{_id}}">
+				{{#if downloaded}}
+				<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-saved"></i> Redownload</button>
+				{{else}}
+				<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+				{{/if}}
+			</a>
+			{{/if}}
 		{{else}}
-			<button type="button" class="btn btn-primary download"><i class="glyphicon glyphicon-download-alt"></i> Download</button>
+			<p>Click <button type="button" class="inspect btn btn-default btn-xs"><i class="glyphicon glyphicon-zoom-in"></i> Inspect</button> on a photo to open it here.</p>
 		{{/if}}
-	</a>
-{{/if}}
+	</div>
+</div>

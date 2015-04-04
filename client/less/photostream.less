@@ -2,17 +2,18 @@
  * Styles for the photostream/photo grid
  */
 
-#photos {
+#main {
   // Image loading indicator
   transition: opacity 1s;
-  &.loading {
-    opacity: .25;
-  }
 
   // A grid for the photos that keeps them in straight rows
-  > .photo {
+  .photo {
     float: none;
     display: inline-block;
     vertical-align: top;
   }
+}
+
+.loading #main {
+  opacity: .25;
 }

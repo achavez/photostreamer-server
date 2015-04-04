@@ -1,51 +1,18 @@
-define(['backbone', 'views/photo'], function(Backbone, PhotoView) {
+define(['marionette', 'views/photo', 'tpl'], function(Marionette, PhotoView, tpl) {
 
   'use strict';
 
-  return Backbone.View.extend({
-    initialize: function() {
-      this.empty = this.$el.html();
+  return Marionette.CollectionView.extend({
 
-      // Render on first fetch
-      this.collection.once('sync', this.render, this);
+    className: 'row',
 
-      // Add new photos one at a time
-      this.collection.on("add", function(photo) {
-        // If this is the first photo to be streamed,
-        // remove the empty text
-        if(this.collection.length === 1) {
-          this.$el.html('');
-        }
+    childView: PhotoView,
 
-        var el = this.renderSingle(photo);
-        this.$el.prepend(el);
-      }, this);
+    emptyView: Marionette.ItemView.extend({
 
-      // When the database is dumped and starts fresh
-      this.collection.on('reset', this.render, this);
-    },
+      template: tpl.photostreamEmpty
 
-    render: function(){
-      this.$el.removeClass('loading');
-
-      // If there are photos
-      if(this.collection.length > 0) {
-        this.$el.empty();
-        this.collection.forEach(function(photo) {
-          var el = this.renderSingle(photo);
-          this.$el.append(el);
-        }, this);
-      }
-      // Otherwise, show empty text
-      else {
-        this.$el.html(this.empty);
-      }
-    },
-
-    renderSingle: function(photo){
-      var photoView = new PhotoView({model: photo});
-      return photoView.render().el;
-    }
+    })
 
   });
 

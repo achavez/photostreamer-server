@@ -1,45 +1,43 @@
-define(['backbone', 'tpl'], function(Backbone, tpl) {
+define(['marionette', 'backbone', 'views/download', 'tpl'], function(Marionette, Backbone, DownloadItemView, tpl) {
 
   'use strict';
 
-  return Backbone.View.extend({
+  return Marionette.CollectionView.extend({
 
-    initialize: function() {
-      this.empty = this.$el.html();
+    tagName: 'table',
 
-      // Render after the first fetch and on resets
-      this.collection.once('sync', this.render, this);
-      this.collection.on('reset', this.render, this);
+    className: 'table table-condensed',
 
-      // Re-render every time a download becomes available
-      this.collection.on('change', function(download) {
-        if(download.hasChanged('full') || download.hasChanged('downloaded')) {
-          this.render();
-        }
-      }, this);
+    childView: DownloadItemView,
+
+    emptyView: Marionette.ItemView.extend({
+
+      tagName: 'tbody',
+
+      template: '<tr><td colspan="4">There aren\'t any photos available for download yet.</td></tr>'
+
+    }),
+
+    // Prepend the table header every time the view
+    // is rendered
+    onRender: function(){
+      var thead = '<thead>' +
+        '<tr>' +
+        '<th></th>' +
+        '<th>File ID</th>' +
+        '<th>Filesize</th>' +
+        '<th></th>' +
+        '</tr>' +
+        '</thead>';
+      this.$el.prepend(thead);
     },
 
-    template: tpl.download,
+    template: tpl.downloads,
 
-    // Render a row for each photo with an available download
-    render: function() {
-      var el = this.collection.chain()
-        .filter(function(photo) {
-          return photo.has('full');
-        })
-        .reduce(function(memo, download) {
-          return memo + this.template(download.toJSON());
-        }, '', this)
-        .value();
-
-      // Use the empty text if there are no downloads available
-      // (like after a DB dump)
-      if(el !== '') {
-        this.$el.html(el);
-      }
-      else {
-        this.$el.html(this.empty);
-      }
+    // Only show photos that have a full resolution download
+    // available
+    filter: function (child) {
+      return child.get('full') === 'what';
     }
 
   });

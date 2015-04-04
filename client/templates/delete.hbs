@@ -1,0 +1,21 @@
+<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#delete-confirm">
+  <i class="glyphicon glyphicon-trash"></i> Empty photo database
+</button>
+
+<div class="modal fade" id="delete-confirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Are you sure you want to empty the database?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Emptying the database won't actually delete the files from the server where they're stored, it'll just delete them from this viewer app.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger delete" data-dismiss="modal"><i class="glyphicon glyphicon-trash"></i> Empty the database</button>
+      </div>
+    </div>
+  </div>
+</div>

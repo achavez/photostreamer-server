@@ -1,20 +1,25 @@
-define(['backbone', 'tpl'], function(Backbone, tpl) {
+define(['marionette', 'tpl'], function(Marionette, tpl) {
 
   'use strict';
 
-  return Backbone.View.extend({
-
-    initialize: function() {
-      this.model.on('change', this.render, this);
-    },
+  return Marionette.ItemView.extend({
 
     template: tpl.photo,
 
     className: 'photo col-xs-12 col-sm-6 col-md-4 col-lg-3',
 
+    ui: {
+      request: '.request-full',
+      inspect: '.inspect'
+    },
+
     events: {
-      "click .request-full": "request",
-      "click .inspect": "inspect"
+      'click @ui.request': 'request',
+      'click @ui.inspect': 'inspect'
+    },
+
+    modelEvents: {
+      'change': 'render'
     },
 
     request: function() {
@@ -23,11 +28,6 @@ define(['backbone', 'tpl'], function(Backbone, tpl) {
 
     inspect: function() {
       this.model.collection.inspect(this.model);
-    },
-
-    render: function() {
-      this.$el.html(this.template(this.model.toJSON()));
-      return this;
     }
 
   });

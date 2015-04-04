@@ -4,7 +4,7 @@ define(['backbone', 'models/photo', 'moment'], function(Backbone, Photo, moment)
 
   return Backbone.Collection.extend({
 
-    initialize: function(options) {
+    initialize: function(models, options) {
       // Store our socket connection and re-fetch if the connection is
       // dropped/re-established
       this.connection = options.connection;
