@@ -11,11 +11,8 @@ define(['marionette', 'backbone', 'views/download', 'tpl'], function(Marionette,
     childView: DownloadItemView,
 
     emptyView: Marionette.ItemView.extend({
-
       tagName: 'tbody',
-
       template: '<tr><td colspan="4">There aren\'t any photos available for download yet.</td></tr>'
-
     }),
 
     // Prepend the table header every time the view
@@ -37,7 +34,7 @@ define(['marionette', 'backbone', 'views/download', 'tpl'], function(Marionette,
     // Only show photos that have a full resolution download
     // available
     filter: function (child) {
-      return child.get('full') === 'what';
+      return child.get('full');
     }
 
   });

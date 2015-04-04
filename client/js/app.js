@@ -12,7 +12,7 @@ require([
 	// Persist these across app states
 	new ConnectionView({
 		el: '#connection-status',
-		collection: application.data.photos
+		model: application.data.connection
 	});
 
 	new PhotoCountView({
@@ -21,7 +21,7 @@ require([
 	});
 
 	new NotificationsView({
-		collection: application.data.photos
+		data: application.data
 	});
 
 	application.start();

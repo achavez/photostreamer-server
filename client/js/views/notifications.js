@@ -1,20 +1,20 @@
-define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
+define(['marionette', 'pnotify', 'pnotify.desktop'], function(Marionette, PNotify) {
 
   'use strict';
 
-  return Backbone.View.extend({
+  return Marionette.View.extend({
 
-    initialize: function() {
+    initialize: function(opts) {
       // When a full download becomes available, trigger a notification
-      this.collection.on('change', this.downloadAvailable, this);
+      this.listenTo(opts.data.photos, 'change', this.downloadAvailable);
 
       // Notifications for database empty process
-      this.collection.on('dump:success', this.emptySuccess, this);
-      this.collection.on('dump:error', this.emptyError, this);
+      this.listenTo(opts.data.photos, 'dump:success', this.emptySuccess);
+      this.listenTo(opts.data.photos, 'dump:error', this.emptyError);
 
       // Notifications for connection events
-      this.collection.connection.on('reconnected', this.reconnected, this);
-      this.collection.connection.on('change:connected', this.disconnected, this);
+      this.listenTo(opts.data.connection, 'reconnected', this.reconnected);
+      this.listenTo(opts.data.connection, 'change:connected', this.disconnected);
     },
 
     defaults: {
@@ -56,7 +56,7 @@ define(['backbone', 'pnotify', 'pnotify.desktop'], function(Backbone, PNotify) {
     },
 
     /*
-     * Notifications for Socket.io connection events
+     * Notifications for websocket connection events
      */
     disconnected: function(conn) {
       // Only fire if we've been disconnected

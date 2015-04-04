@@ -2,6 +2,17 @@ define(['handlebars', '../templates/helpers'], function(Handlebars) {
 
 this["JST"] = this["JST"] || {};
 
+this["JST"]["connection"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+  return "  <span class=\"label label-success\">\n    <i class=\"glyphicon glyphicon-ok-circle\"></i> Connected\n  </span>\n";
+  },"3":function(depth0,helpers,partials,data) {
+  return "  <span class=\"label label-danger\">\n    <i class=\"glyphicon glyphicon-remove-circle\"></i> Can't connect to server\n  </span>\n";
+  },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  var stack1, buffer = "";
+  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.connected : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.program(3, data),"data":data});
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"useData":true});
+
 this["JST"]["delete"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<button type=\"button\" class=\"btn btn-danger btn-block\" data-toggle=\"modal\" data-target=\"#delete-confirm\">\n  <i class=\"glyphicon glyphicon-trash\"></i> Empty photo database\n</button>\n\n<div class=\"modal fade\" id=\"delete-confirm\" tabindex=\"-1\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n        <h4 class=\"modal-title\">Are you sure you want to empty the database?</h4>\n      </div>\n      <div class=\"modal-body\">\n        <p>Emptying the database won't actually delete the files from the server where they're stored, it'll just delete them from this viewer app.</p>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>\n        <button type=\"button\" class=\"btn btn-danger delete\" data-dismiss=\"modal\"><i class=\"glyphicon glyphicon-trash\"></i> Empty the database</button>\n      </div>\n    </div>\n  </div>\n</div>\n";
   },"useData":true});

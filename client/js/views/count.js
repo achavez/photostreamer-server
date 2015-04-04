@@ -1,17 +1,16 @@
-define(['backbone'], function(Backbone) {
+define(['marionette'], function(Marionette) {
 
   'use strict';
 
-  return Backbone.View.extend({
+  return Marionette.ItemView.extend({
 
-    initialize: function() {
-      this.collection.once('sync', this.render, this);
-      this.collection.on('reset', this.render, this);
-      this.collection.on('add', this.render, this);
+    template: function(collection) {
+      return collection.items.length;
     },
 
-    render: function() {
-      this.$el.text(this.collection.length);
+    collectionEvents: {
+      'add': 'render',
+      'reset': 'render'
     }
 
   });

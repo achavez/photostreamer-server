@@ -1,36 +1,14 @@
-define(['backbone'], function (Backbone) {
+define(['marionette', 'tpl'], function (Marionette, tpl) {
 
   'use strict';
 
-  return Backbone.View.extend({
+  return Marionette.ItemView.extend({
 
-    initialize: function() {
-      this.collection.connection.on('change:connected', this.change, this);
+    modelEvents: {
+      'change:connected': 'render'
     },
 
-    connectedLabel: '<i class="glyphicon glyphicon-ok-circle"></i> Connected',
-    disconnectedLabel: '<i class="glyphicon glyphicon-remove-circle"></i> Can\'t connect to server',
-
-    change: function(conn) {
-      if(conn.get('connected') === true) {
-        this.connected();
-      }
-      else {
-        this.disconnected();
-      }
-    },
-
-    disconnected: function() {
-      this.$el.html(this.disconnectedLabel);
-      this.$el.removeClass('label-success');
-      this.$el.addClass('label-danger');
-    },
-
-    connected: function() {
-      this.$el.html(this.connectedLabel);
-      this.$el.removeClass('label-danger label-warning');
-      this.$el.addClass('label-success');
-    }
+    template: tpl.connection
 
   });
 
