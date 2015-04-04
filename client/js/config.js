@@ -4,7 +4,6 @@ require.config({
     marionette: '../../bower_components/marionette/lib/backbone.marionette',
     underscore: '../../bower_components/underscore/underscore',
     jquery: '../../bower_components/jquery/dist/jquery',
-    imagesLoaded: '../../bower_components/imagesloaded/imagesloaded.pkgd',
     handlebars: '../../bower_components/handlebars/handlebars',
     moment: '../../bower_components/momentjs/moment',
     filesize: '../../bower_components/filesize/lib/filesize',
@@ -16,10 +15,6 @@ require.config({
     'bootstrap.modal': '../../bower_components/bootstrap/js/modal'
   },
   shim: {
-    imagesLoaded: {
-      deps: ['jquery'],
-      exports: 'jQuery.fn.imagesLoaded'
-    },
     'bootstrap.collapse': {
       deps: ['jquery', 'bootstrap.transition']
     },

@@ -4,7 +4,6 @@ require([
 	'views/connection',
 	'views/notifications',
 	'layouts/stream',
-	'imagesLoaded',
 	'bootstrap.collapse'
 ], function(application, PhotoCountView, ConnectionView, NotificationsView, StreamLayout) {
 
