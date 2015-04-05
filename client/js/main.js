@@ -1,7 +1,7 @@
 require([
 	'lib/application',
-	'views/count',
-	'views/connection',
+	'itemviews/count',
+	'itemviews/connection',
 	'views/notifications',
 	'layouts/stream',
 	'bootstrap.collapse'

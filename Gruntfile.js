@@ -42,8 +42,11 @@ module.exports = function(grunt) {
           processName: function(filePath) {
             var pieces = filePath.split("/");
             var filename = pieces[pieces.length - 1];
-            var base = filename.split('.');
-            return base[0];
+            var name = filename.split('.')[0];
+            if(pieces[pieces.length - 2] !== 'templates') {
+              name = pieces[pieces.length - 2] + '.' + name;
+            }
+            return name;
           }
         },
         files: {
@@ -67,7 +70,7 @@ module.exports = function(grunt) {
           out: 'static/client.js',
           optimize: 'uglify2',
           include: [
-            'app'
+            'main'
           ],
           name: '../../bower_components/almond/almond',
           generateSourceMaps: true,
@@ -108,7 +111,7 @@ module.exports = function(grunt) {
     // Watch client-side code for changes and re-build as needed
     watch: {
       js: {
-        files: ['client/**/*.js', 'client/templates'],
+        files: ['client/**/*.js', 'client/templates/**/*.hbs'],
         tasks: ['build:js']
       },
       less: {

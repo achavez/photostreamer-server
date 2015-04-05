@@ -1,4 +1,4 @@
-define(['marionette', 'backbone', 'views/download', 'tpl'], function(Marionette, Backbone, DownloadItemView, tpl) {
+define(['marionette', 'backbone', 'itemviews/download', 'tpl'], function(Marionette, Backbone, DownloadItemView, tpl) {
 
   'use strict';
 
@@ -29,7 +29,7 @@ define(['marionette', 'backbone', 'views/download', 'tpl'], function(Marionette,
       this.$el.prepend(thead);
     },
 
-    template: tpl.downloads,
+    template: tpl['emptys.downloads'],
 
     // Only show photos that have a full resolution download
     // available

@@ -12,7 +12,7 @@ define(['marionette', 'tpl', 'bootstrap.modal'], function(Marionette, tpl) {
       'click @ui.delete': 'delete'
     },
 
-    template: tpl.delete,
+    template: tpl['items.delete'],
 
     delete: function() {
       this.collection.dump();

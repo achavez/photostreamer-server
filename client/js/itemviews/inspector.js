@@ -4,18 +4,14 @@ define(['marionette', 'tpl'], function(Marionette, tpl) {
 
   return Marionette.ItemView.extend({
 
-    template: tpl.photo,
-
-    className: 'photo col-xs-12 col-sm-6 col-md-4 col-lg-3',
+    template: tpl['items.inspector'],
 
     ui: {
-      request: '.request-full',
-      inspect: '.inspect'
+      request: '.request-full'
     },
 
     events: {
       'click @ui.request': 'request',
-      'click @ui.inspect': 'inspect'
     },
 
     modelEvents: {
@@ -24,10 +20,6 @@ define(['marionette', 'tpl'], function(Marionette, tpl) {
 
     request: function() {
       this.model.request();
-    },
-
-    inspect: function() {
-      this.triggerMethod('photo:inspect');
     }
 
   });

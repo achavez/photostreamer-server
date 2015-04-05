@@ -8,7 +8,7 @@ define(['marionette', 'tpl'], function (Marionette, tpl) {
       'change:connected': 'render'
     },
 
-    template: tpl.connection
+    template: tpl['items.connection']
 
   });
 

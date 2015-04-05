@@ -2,7 +2,19 @@ define(['handlebars', '../templates/helpers'], function(Handlebars) {
 
 this["JST"] = this["JST"] || {};
 
-this["JST"]["connection"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["JST"]["desktopNotifications"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<button type=\"button\" class=\"btn btn-primary btn-block\"><i class=\"glyphicon glyphicon-comment\"></i> Enable desktop notifications</button>\n<p class=\"text-center\">\n  <small>Requires a <a href=\"http://caniuse.com/notifications\" target=\"_blank\">modern Web browser</a>.</small>\n</p>";
+  },"useData":true});
+
+this["JST"]["emptys.downloads"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"panel panel-default\">\n	<div class=\"panel-heading\">\n		<h3 class=\"panel-title\">Available downloads</h3>\n	</div>\n	<div class=\"panel-body\">\n		<table class=\"table table-condensed\">\n			<thead>\n				<tr>\n					<th></th>\n					<th>File ID</th>\n					<th>Filesize</th>\n					<th></th>\n				</tr>\n			</thead>\n			<tbody>\n				<tr>\n					<td colspan=\"4\">There aren't any photos available for download yet.</td>\n				</tr>\n			</tbody>\n		</table>\n	</div>\n</div>\n";
+  },"useData":true});
+
+this["JST"]["emptys.photostream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"col-xs-12\">\n  <div class=\"jumbotron\">\n    <h1><small><i class=\"glyphicon glyphicon-picture\"></i></small> No photos</h1>\n    <p>Photos will show here as soon as they arrive.</p>\n  </div>\n</div>";
+  },"useData":true});
+
+this["JST"]["items.connection"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   return "  <span class=\"label label-success\">\n    <i class=\"glyphicon glyphicon-ok-circle\"></i> Connected\n  </span>\n";
   },"3":function(depth0,helpers,partials,data) {
   return "  <span class=\"label label-danger\">\n    <i class=\"glyphicon glyphicon-remove-circle\"></i> Can't connect to server\n  </span>\n";
@@ -13,15 +25,11 @@ this["JST"]["connection"] = Handlebars.template({"1":function(depth0,helpers,par
   return buffer;
 },"useData":true});
 
-this["JST"]["delete"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["JST"]["items.delete"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<button type=\"button\" class=\"btn btn-danger btn-block\" data-toggle=\"modal\" data-target=\"#delete-confirm\">\n  <i class=\"glyphicon glyphicon-trash\"></i> Empty photo database\n</button>\n\n<div class=\"modal fade\" id=\"delete-confirm\" tabindex=\"-1\" role=\"dialog\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n        <h4 class=\"modal-title\">Are you sure you want to empty the database?</h4>\n      </div>\n      <div class=\"modal-body\">\n        <p>Emptying the database won't actually delete the files from the server where they're stored, it'll just delete them from this viewer app.</p>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>\n        <button type=\"button\" class=\"btn btn-danger delete\" data-dismiss=\"modal\"><i class=\"glyphicon glyphicon-trash\"></i> Empty the database</button>\n      </div>\n    </div>\n  </div>\n</div>\n";
   },"useData":true});
 
-this["JST"]["desktopNotifications"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<button type=\"button\" class=\"btn btn-primary btn-block\"><i class=\"glyphicon glyphicon-comment\"></i> Enable desktop notifications</button>\n<p class=\"text-center\">\n  <small>Requires a <a href=\"http://caniuse.com/notifications\" target=\"_blank\">modern Web browser</a>.</small>\n</p>";
-  },"useData":true});
-
-this["JST"]["download"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["JST"]["items.download"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   return "<i class=\"glyphicon glyphicon-ok text-success\"></i>";
   },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<td>";
@@ -36,11 +44,7 @@ this["JST"]["download"] = Handlebars.template({"1":function(depth0,helpers,parti
     + "\">\n    <button type=\"button\" class=\"btn btn-primary btn-xs\"><i class=\"glyphicon glyphicon-download-alt\"></i></button>\n  </a>\n</td>";
 },"useData":true});
 
-this["JST"]["downloads"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"panel panel-default\">\n	<div class=\"panel-heading\">\n		<h3 class=\"panel-title\">Available downloads</h3>\n	</div>\n	<div class=\"panel-body\">\n		<table class=\"table table-condensed\">\n			<thead>\n				<tr>\n					<th></th>\n					<th>File ID</th>\n					<th>Filesize</th>\n					<th></th>\n				</tr>\n			</thead>\n			<tbody>\n				<tr>\n					<td colspan=\"4\">There aren't any photos available for download yet.</td>\n				</tr>\n			</tbody>\n		</table>\n	</div>\n</div>\n";
-  },"useData":true});
-
-this["JST"]["inspector"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["JST"]["items.inspector"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "			<p>\n				<img class=\"img-responsive\" src=\""
     + escapeExpression(((helper = (helper = helpers.thumbnail || (depth0 != null ? depth0.thumbnail : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"thumbnail","hash":{},"data":data}) : helper)))
     + "\" />\n			</p>\n			<p>\n				<strong>File ID</strong> "
@@ -103,11 +107,7 @@ this["JST"]["inspector"] = Handlebars.template({"1":function(depth0,helpers,part
   return buffer + "	</div>\n</div>";
 },"useData":true});
 
-this["JST"]["stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-4 col-sm-push-8\">\n    <div id=\"desktop-notifications\"></div>\n    <div id=\"inspector\"></div>\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">Available downloads</h3>\n      </div>\n      <div id=\"downloads\" class=\"panel-body\"></div>\n    </div>\n    <div id=\"delete\"></div>\n  </div>\n  <div id=\"stream\" class=\"col-xs-12 col-sm-8 col-sm-pull-4\"></div>\n</div>";
-  },"useData":true});
-
-this["JST"]["photo"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["JST"]["items.photo"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   return "				<button type=\"button\" class=\"btn btn-default request-full\"><i class=\"glyphicon glyphicon-import\"></i> Request</button>\n";
   },"3":function(depth0,helpers,partials,data) {
   var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "				<a href=\"/download/"
@@ -135,8 +135,8 @@ this["JST"]["photo"] = Handlebars.template({"1":function(depth0,helpers,partials
   return buffer + "			<button type=\"button\" class=\"inspect btn btn-default\"><i class=\"glyphicon glyphicon-zoom-in\"></i> Inspect</button>\n		</div>\n	</div>\n</div>";
 },"useData":true});
 
-this["JST"]["photostreamEmpty"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div class=\"col-xs-12\">\n  <div class=\"jumbotron\">\n    <h1><small><i class=\"glyphicon glyphicon-picture\"></i></small> No photos</h1>\n    <p>Photos will show here as soon as they arrive.</p>\n  </div>\n</div>";
+this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-4 col-sm-push-8\">\n    <div id=\"desktop-notifications\"></div>\n    <div id=\"inspector\"></div>\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">Available downloads</h3>\n      </div>\n      <div id=\"downloads\" class=\"panel-body\"></div>\n    </div>\n    <div id=\"delete\"></div>\n  </div>\n  <div id=\"stream\" class=\"col-xs-12 col-sm-8 col-sm-pull-4\"></div>\n</div>";
   },"useData":true});
 
 return this["JST"];

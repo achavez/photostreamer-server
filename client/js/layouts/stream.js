@@ -1,9 +1,9 @@
 define([
   'marionette',
-  'views/photostream',
-  'views/inspector',
-  'views/downloads',
-  'views/delete',
+  'collectionviews/photostream',
+  'itemviews/inspector',
+  'collectionviews/downloads',
+  'itemviews/delete',
   'views/desktopNotifications',
   'tpl'
 ], function(Marionette, PhotostreamView, InspectorView, DownloadsView, DeleteView, DesktopNotificationsView, tpl) {
@@ -47,7 +47,7 @@ define([
 
     destroyImmediate: true,
 
-    template: tpl.stream,
+    template: tpl['layouts.stream'],
 
     regions: {
       notifications: '#desktop-notifications',

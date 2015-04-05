@@ -6,7 +6,7 @@ define(['marionette', 'tpl'], function(Marionette, tpl) {
 
     tagName: 'tr',
 
-    template: tpl.download,
+    template: tpl['items.download'],
 
     modelEvents: {
       'change': 'render'

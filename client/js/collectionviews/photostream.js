@@ -1,4 +1,4 @@
-define(['marionette', 'views/photo', 'tpl'], function(Marionette, PhotoView, tpl) {
+define(['marionette', 'itemviews/photo', 'tpl'], function(Marionette, PhotoView, tpl) {
 
   'use strict';
 
@@ -9,7 +9,7 @@ define(['marionette', 'views/photo', 'tpl'], function(Marionette, PhotoView, tpl
     childView: PhotoView,
 
     emptyView: Marionette.ItemView.extend({
-      template: tpl.photostreamEmpty
+      template: tpl['emptys.photostream']
     })
 
   });
