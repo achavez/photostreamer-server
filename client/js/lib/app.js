@@ -19,7 +19,7 @@ define([
     var router = new Router();
 
     // Tack on a 404 route
-    router.appRoute(':notFound', 'notFound');
+    //router.appRoute(':notFound', 'notFound');
 
     Backbone.history.start();
 

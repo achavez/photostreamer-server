@@ -5,7 +5,8 @@ define(['marionette', 'lib/controllers'], function(Marionette, controllers) {
   return Marionette.AppRouter.extend({
 
     appRoutes: {
-      '': 'stream'
+      '': 'stream',
+      'users': 'users'
     },
 
     controller: controllers
