@@ -12,24 +12,27 @@ define([
 
   return Marionette.LayoutView.extend({
 
-    initialize: function(opts) {
-      this.data = opts.data;
+    initialize: function() {
+      // Fetch the view data
+      Marionette.Radio.channel('fetch').command('photos');
     },
 
     onBeforeShow: function() {
 
+      var photos = Marionette.Radio.channel('data').request('photos');
+
       this.showChildView('stream', new PhotostreamView({
-        collection: this.data.photos
+        collection: photos
       }));
 
       this.showChildView('inspector', new InspectorView());
 
       this.showChildView('downloads', new DownloadsView({
-        collection: this.data.photos
+        collection: photos
       }));
 
       this.showChildView('delete', new DeleteView({
-        collection: this.data.photos
+        collection: photos
       }));
 
       this.showChildView('notifications', new DesktopNotificationsView());

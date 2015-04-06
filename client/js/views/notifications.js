@@ -5,16 +5,22 @@ define(['marionette', 'pnotify', 'pnotify.desktop'], function(Marionette, PNotif
   return Marionette.View.extend({
 
     initialize: function(opts) {
+      // Request our data from the app
+      var dataChannel = Marionette.Radio.channel('data');
+
+      var photos = dataChannel.request('photos'),
+          connection = dataChannel.request('connection');
+
       // When a full download becomes available, trigger a notification
-      this.listenTo(opts.data.photos, 'change', this.downloadAvailable);
+      this.listenTo(photos, 'change', this.downloadAvailable);
 
       // Notifications for database empty process
-      this.listenTo(opts.data.photos, 'dump:success', this.emptySuccess);
-      this.listenTo(opts.data.photos, 'dump:error', this.emptyError);
+      this.listenTo(photos, 'dump:success', this.emptySuccess);
+      this.listenTo(photos, 'dump:error', this.emptyError);
 
       // Notifications for connection events
-      this.listenTo(opts.data.connection, 'reconnected', this.reconnected);
-      this.listenTo(opts.data.connection, 'change:connected', this.disconnected);
+      this.listenTo(connection, 'reconnected', this.reconnected);
+      this.listenTo(connection, 'change:connected', this.disconnected);
     },
 
     defaults: {

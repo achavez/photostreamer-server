@@ -1,33 +1,24 @@
 require([
-	'lib/application',
+	'lib/app',
 	'itemviews/count',
 	'itemviews/connection',
 	'views/notifications',
-	'layouts/stream',
 	'bootstrap.collapse'
-], function(application, PhotoCountView, ConnectionView, NotificationsView, StreamLayout) {
-
-	$('body').removeClass('loading');
+], function(app, PhotoCountView, ConnectionView, NotificationsView) {
 
 	// Persist these across app states
 	new ConnectionView({
 		el: '#connection-status',
-		model: application.data.connection
+		model: Marionette.Radio.channel('data').request('connection')
 	});
 
 	new PhotoCountView({
 		el: '#count',
-		collection: application.data.photos
+		collection: Marionette.Radio.channel('data').request('photos')
 	});
 
-	new NotificationsView({
-		data: application.data
-	});
+	new NotificationsView();
 
-	application.start();
-
-	application.getRegion('main').show(new StreamLayout({
-		data: application.data
-	}));
+	app.start();
 
 });

@@ -69,9 +69,7 @@ module.exports = function(grunt) {
           mainConfigFile: 'client/js/config.js',
           out: 'static/client.js',
           optimize: 'uglify2',
-          include: [
-            'main'
-          ],
+          include: ['config', 'main'],
           name: '../../bower_components/almond/almond',
           generateSourceMaps: true,
           preserveLicenseComments: false
