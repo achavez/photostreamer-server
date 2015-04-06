@@ -17,6 +17,7 @@
 
 // App style modules
 @import "photostream";
+@import "nav";
 
 // Misc. app styles
 
@@ -28,12 +29,6 @@
 	}
 }
 
-// Image count
-#count {
-	top: -4px;
-	position: relative;
-}
-
 // Allow long links to break
 #inspector {
 	a {
@@ -41,7 +36,9 @@
 	}
 }
 
-// Fix navbar-right alignment
-.navbar-right {
-	margin-right: 0;
+// Links within alerts
+.alert a {
+	font-weight: bold;
+	text-decoration: underline;
+	color: white;
 }

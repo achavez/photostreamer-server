@@ -107,6 +107,10 @@ this["JST"]["items.inspector"] = Handlebars.template({"1":function(depth0,helper
   return buffer + "	</div>\n</div>";
 },"useData":true});
 
+this["JST"]["items.notFound"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<div class=\"alert alert-danger\" role=\"alert\"><span class=\"glyphicon glyphicon-alert\"></span> The page you're looking for can't be found. If you think this is a result of a bug in the application, please <a href=\"https://github.com/achavez/photostreamer-server/issues/new\" target=\"_blank\">file an issue</a> on Github.</div>";
+  },"useData":true});
+
 this["JST"]["items.photo"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   return "				<button type=\"button\" class=\"btn btn-default request-full\"><i class=\"glyphicon glyphicon-import\"></i> Request</button>\n";
   },"3":function(depth0,helpers,partials,data) {

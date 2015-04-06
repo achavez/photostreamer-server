@@ -1,17 +1,22 @@
 <nav class="navbar navbar-default">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">
+			<div class="navbar-brand">
 				<strong>Logo</strong>
-			</a>
+			</div>
 		</div>
+
+		<ul class="nav navbar-nav">
+			<li><a href="#/">Photos <span id="count" class="badge"></span></a></li>
+		</ul>
+
 		<p class="navbar-text navbar-right">Signed in as {{user.name}} (<a href="/logout">Logout</a>)</p>
 	</div>
 </nav>
 
 <div class="container">
 	<div class="page-header">
-		<h1>Photos <span id="count" class="badge"></span></h1>
+		<h1 id="page-title"></h1>
 		<div id="connection-status" class="pull-right">
 			<span class="label label-warning">
 				<i class="glyphicon glyphicon-flash"></i> Connecting to server

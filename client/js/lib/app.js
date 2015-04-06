@@ -6,7 +6,11 @@ define(['marionette', 'backbone', 'lib/router', 'collections/photos', 'models/co
 
   app.on('start', function() {
     // Setup the router
-    new Router();
+    var router = new Router();
+
+    // Tack on a 404 route
+    router.appRoute(':notFound', 'notFound');
+
     Backbone.history.start();
   });
 
@@ -42,7 +46,8 @@ define(['marionette', 'backbone', 'lib/router', 'collections/photos', 'models/co
   });
 
   // Channels for handling view updates
-  Marionette.Radio.channel('render').comply('layout', function(layoutView) {
+  Marionette.Radio.channel('render').comply('layout', function(layoutView, title) {
+    $('#page-title').text(title);
     app.getRegion('main').show(layoutView);
   });
 
