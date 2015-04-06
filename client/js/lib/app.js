@@ -1,4 +1,14 @@
-define(['marionette', 'backbone', 'lib/router', 'collections/photos', 'models/connection'], function(Marionette, Backbone, Router, PhotosCollection, ConnectionModel) {
+define([
+  'marionette',
+  'backbone',
+  'lib/router',
+  'collections/photos',
+  'collections/users',
+  'models/connection',
+  'itemviews/count',
+  'itemviews/connection',
+  'views/notifications'
+], function(Marionette, Backbone, Router, PhotosCollection, UsersCollection, ConnectionModel, PhotoCountView, ConnectionView, NotificationsView) {
 
   'use strict';
 
@@ -12,13 +22,26 @@ define(['marionette', 'backbone', 'lib/router', 'collections/photos', 'models/co
     router.appRoute(':notFound', 'notFound');
 
     Backbone.history.start();
+
+    // Setup views that persist across app states
+    new ConnectionView({
+      el: '#connection-status',
+      model: app.data.connection
+    });
+
+    new PhotoCountView({
+      el: '#count',
+      collection: app.data.photos
+    });
+
+    new NotificationsView();
   });
 
-  app.data = {};
-
-  // Setup the Backbone photos collection and connection model
-  app.data.connection = new ConnectionModel();
-
+  // Setup empty collection for app data
+  app.data = {
+    connection: new ConnectionModel(),
+    users: new UsersCollection()
+  };
   app.data.photos = new PhotosCollection(null, {
     connection: app.data.connection
   });
@@ -27,29 +50,23 @@ define(['marionette', 'backbone', 'lib/router', 'collections/photos', 'models/co
     main: '#main'
   });
 
+  var radio = Marionette.Radio.channel('app');
+
   // Setup a request channel for app data
-  var dataChannel = Marionette.Radio.channel('data');
+  radio.reply('data', function(key) {
+      return app.data[key];
+    });
 
-  dataChannel.reply('photos', function() {
-    return app.data.photos;
-  });
+  // And a command channel to trigger a fetch for app data
+  radio.comply('fetch', function(key) {
+      return app.data[key].fetch();
+    });
 
-  dataChannel.reply('connection', function() {
-    return app.data.connection;
-  });
-
-  // And a command channel to fetch app data
-  var fetchChannel = Marionette.Radio.channel('fetch');
-
-  fetchChannel.comply('photos', function() {
-    app.data.photos.fetch();
-  });
-
-  // Channels for handling view updates
-  Marionette.Radio.channel('render').comply('layout', function(layoutView, title) {
-    $('#page-title').text(title);
-    app.getRegion('main').show(layoutView);
-  });
+  // Channel for rendering top-level views
+  radio.comply('render', function(layoutView, title) {
+      $('#page-title').text(title);
+      app.getRegion('main').show(layoutView);
+    });
 
   return app;
 

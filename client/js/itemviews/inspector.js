@@ -1,4 +1,4 @@
-define(['marionette', 'tpl'], function(Marionette, tpl) {
+define(['marionette', 'tpl', 'bootstrap.collapse'], function(Marionette, tpl) {
 
   'use strict';
 

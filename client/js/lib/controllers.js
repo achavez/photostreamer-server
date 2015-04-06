@@ -6,7 +6,7 @@ define(['marionette', 'layoutviews/stream', 'itemviews/notFound'], function(Mari
 
     // Render a page by radioing to the app with a view and a page title
     _render: function(view, title) {
-      Marionette.Radio.channel('render').command('layout', view, title);
+      Marionette.Radio.channel('app').command('render', view, title);
     },
 
     stream: function() {

@@ -6,10 +6,10 @@ define(['marionette', 'pnotify', 'pnotify.desktop'], function(Marionette, PNotif
 
     initialize: function(opts) {
       // Request our data from the app
-      var dataChannel = Marionette.Radio.channel('data');
+      var radio = Marionette.Radio.channel('app');
 
-      var photos = dataChannel.request('photos'),
-          connection = dataChannel.request('connection');
+      var photos = radio.request('data', 'photos'),
+          connection = radio.request('data', 'connection');
 
       // When a full download becomes available, trigger a notification
       this.listenTo(photos, 'change', this.downloadAvailable);

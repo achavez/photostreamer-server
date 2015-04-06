@@ -14,12 +14,14 @@ define([
 
     initialize: function() {
       // Fetch the view data
-      Marionette.Radio.channel('fetch').command('photos');
+      Marionette.Radio.channel('app').command('fetch', 'photos');
     },
 
     onBeforeShow: function() {
 
-      var photos = Marionette.Radio.channel('data').request('photos');
+      var photos = Marionette.Radio
+        .channel('app')
+        .request('data', 'photos');
 
       this.showChildView('stream', new PhotostreamView({
         collection: photos
