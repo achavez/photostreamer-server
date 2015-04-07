@@ -1,9 +1,9 @@
 define([
   'marionette',
-  'collectionviews/users',
-  'itemviews/usersFormControls',
+  'compositeviews/users',
+  'itemviews/user',
   'tpl'
-  ], function(Marionette, UsersCollectionView, UsersFormControlsItemView, tpl) {
+  ], function(Marionette, UsersCompositeView, UserItemView, tpl) {
 
     'use strict';
 
@@ -20,13 +20,11 @@ define([
           .channel('app')
           .request('data', 'users');
 
-        this.showChildView('list', new UsersCollectionView({
+        this.showChildView('list', new UsersCompositeView({
           collection: users
         }));
 
-        this.showChildView('controls', new UsersFormControlsItemView({
-          collection: users
-        }));
+        this.showChildView('new', new UserItemView());
 
       },
 
@@ -36,7 +34,8 @@ define([
 
       regions: {
         list: '#list',
-        controls: '#controls'
+        controls: '#controls',
+        new: '#new'
       }
 
     });

@@ -2,6 +2,10 @@ define(['handlebars', '../templates/helpers'], function(Handlebars) {
 
 this["JST"] = this["JST"] || {};
 
+this["JST"]["composites.users"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<table class=\"table\" id=\"list\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Email</th>\n      <th>API Key</th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody></tbody>\n</table>";
+  },"useData":true});
+
 this["JST"]["desktopNotifications"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<button type=\"button\" class=\"btn btn-primary btn-block\"><i class=\"glyphicon glyphicon-comment\"></i> Enable desktop notifications</button>\n<p class=\"text-center\">\n  <small>Requires a <a href=\"http://caniuse.com/notifications\" target=\"_blank\">modern Web browser</a>.</small>\n</p>";
   },"useData":true});
@@ -141,30 +145,26 @@ this["JST"]["items.photo"] = Handlebars.template({"1":function(depth0,helpers,pa
 
 this["JST"]["items.user"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "  <div class=\"form-group col-xs-12\">\n    <label>Key</label>\n    <input class=\"form-control key\" type=\"text\" value=\""
+  return "    <input class=\"form-control key\" type=\"text\" value=\""
     + escapeExpression(((helper = (helper = helpers.key || (depth0 != null ? depth0.key : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"key","hash":{},"data":data}) : helper)))
-    + "\" readonly>\n  </div>\n";
+    + "\" readonly>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<div class=\"form-group col-xs-12 col-sm-6\">\n  <label>Name</label>\n  <input class=\"form-control name\" type=\"text\" placeholder=\"Name\" value=\""
+  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<td>\n  <input class=\"form-control name\" type=\"text\" placeholder=\"Name\" value=\""
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
-    + "\">\n</div>\n<div class=\"form-group col-xs-12 col-sm-6\">\n  <label>Email address</label>\n  <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\" value=\""
+    + "\">\n</td>\n<td>\n  <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\" value=\""
     + escapeExpression(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"email","hash":{},"data":data}) : helper)))
-    + "\">\n</div>\n";
+    + "\">\n</td>\n<td>\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.key : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer;
+  return buffer + "</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n  </div>\n</td>";
 },"useData":true});
-
-this["JST"]["items.usersFormControls"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<button type=\"button\" class=\"btn btn-primary form-save\">Save</button>\n<button type=\"button\" class=\"btn btn-default form-reset\">reset</button>";
-  },"useData":true});
 
 this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-4 col-sm-push-8\">\n    <div id=\"desktop-notifications\"></div>\n    <div id=\"inspector\"></div>\n    <div class=\"panel panel-default\">\n      <div class=\"panel-heading\">\n        <h3 class=\"panel-title\">Available downloads</h3>\n      </div>\n      <div id=\"downloads\" class=\"panel-body\"></div>\n    </div>\n    <div id=\"delete\"></div>\n  </div>\n  <div id=\"stream\" class=\"col-xs-12 col-sm-8 col-sm-pull-4\"></div>\n</div>";
   },"useData":true});
 
 this["JST"]["layouts.users"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div id=\"list\"></div>\n<div id=\"controls\"></div>";
+  return "<table class=\"table\" id=\"list\"></table>\n\n<div id=\"controls\"></div>\n<div id=\"new\"></div>";
   },"useData":true});
 
 return this["JST"];
