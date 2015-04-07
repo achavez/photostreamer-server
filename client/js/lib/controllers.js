@@ -1,9 +1,9 @@
 define([
   'marionette',
   'layoutviews/stream',
-  'collectionviews/users',
+  'layoutviews/users',
   'itemviews/notFound'
-], function(Marionette, StreamLayoutView, UsersCollectionView, NotFoundView) {
+], function(Marionette, StreamLayoutView, UsersLayoutView, NotFoundView) {
 
   'use strict';
 
@@ -21,10 +21,7 @@ define([
     },
 
     users: function() {
-      this._radio.command('fetch', 'users');
-      this._render(new UsersCollectionView({
-        collection: this._radio.request('data', 'users')
-      }), 'Users');
+      this._render(new UsersLayoutView(), 'Users');
     },
 
     notFound: function() {

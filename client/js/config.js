@@ -3,6 +3,7 @@ require.config({
     backbone: '../../bower_components/backbone/backbone',
     'backbone.radio': '../../bower_components/backbone.radio/build/backbone.radio',
     'backbone.babysitter': '../../bower_components/backbone.babysitter/lib/backbone.babysitter',
+    'backbone.stickit': '../../bower_components/backbone.stickit/backbone.stickit',
     'marionette': '../../bower_components/marionette/lib/core/backbone.marionette',
     underscore: '../../bower_components/underscore/underscore',
     jquery: '../../bower_components/jquery/dist/jquery',

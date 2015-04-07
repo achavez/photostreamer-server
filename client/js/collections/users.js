@@ -6,7 +6,17 @@ define(['backbone', 'models/user'], function(Backbone, UserModel) {
 
     model: UserModel,
 
-    url: '/api/v1/users'
+    url: '/api/v1/users',
+
+    // A function to update individual models in the collection
+    // if they've changed
+    saveChanged: function() {
+      this.forEach(function(user) {
+        if(user.hasChanged()) {
+          user.save();
+        }
+      });
+    }
 
   });
 
