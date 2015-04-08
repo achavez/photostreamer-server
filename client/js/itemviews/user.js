@@ -16,6 +16,15 @@ define(['marionette', 'tpl', 'backbone.stickit'], function(Marionette, tpl) {
       'click @ui.save': 'save'
     },
 
+    modelEvents: {
+      'change': 'enableSave'
+    },
+
+    enableSave: function() {
+      this.$('.save')
+        .attr('disabled', null);
+    },
+
     // Disable the form and tweak the button text, then save
     // using HTTP API
     save: function() {
@@ -38,7 +47,7 @@ define(['marionette', 'tpl', 'backbone.stickit'], function(Marionette, tpl) {
         .attr('disabled', null);
 
       this.$('.save')
-        .attr('disabled', null)
+        .attr('disabled', 'disabled')
         .find('.text')
         .text('Save');
     },
@@ -47,11 +56,11 @@ define(['marionette', 'tpl', 'backbone.stickit'], function(Marionette, tpl) {
     bindings: {
       '.name': {
         observe: 'name',
-        events: ['change']
+        events: ['change', 'keyup']
       },
       '.email': {
         observe: 'email',
-        events: ['change']
+        events: ['change', 'keyup']
       },
       '.key': 'key'
     },

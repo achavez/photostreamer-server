@@ -156,7 +156,7 @@ this["JST"]["items.user"] = Handlebars.template({"1":function(depth0,helpers,par
     + "\">\n</td>\n<td>\n";
   stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.key : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n  </div>\n</td>";
+  return buffer + "</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n  </div>\n</td>";
 },"useData":true});
 
 this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
