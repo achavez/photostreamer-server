@@ -112,7 +112,7 @@ this["JST"]["items.inspector"] = Handlebars.template({"1":function(depth0,helper
 },"useData":true});
 
 this["JST"]["items.newUser"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<thead>\n  <th col-span=\"4\">Add a new user</th>\n</thead>\n<tbody>\n  <td>\n    <input class=\"form-control name\" type=\"text\" placeholder=\"Name\">\n  </td>\n  <td>\n    <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\">\n  </td>\n  <td>\n    <input class=\"form-control\" type=\"text\" readonly>\n  </td>\n  <td>\n  <button type=\"button\" class=\"btn btn-success save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-user\"></span> <span class=\"text\">Create user</span></button>\n</tbody>";
+  return "<thead>\n  <th col-span=\"3\">Add a new user</th>\n</thead>\n<tbody>\n  <td>\n    <input class=\"form-control name\" type=\"text\" placeholder=\"Name\">\n  </td>\n  <td>\n    <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\">\n  </td>\n  <td>\n  <button type=\"button\" class=\"btn btn-success pull-right save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-user\"></span> <span class=\"text\">Create user</span></button>\n</tbody>";
   },"useData":true});
 
 this["JST"]["items.notFound"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -155,7 +155,7 @@ this["JST"]["items.user"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"
     + escapeExpression(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"email","hash":{},"data":data}) : helper)))
     + "\">\n</td>\n<td>\n  <input class=\"form-control key\" type=\"text\" value=\""
     + escapeExpression(((helper = (helper = helpers.key || (depth0 != null ? depth0.key : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"key","hash":{},"data":data}) : helper)))
-    + "\" readonly>\n</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n    <button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#delete-"
+    + "\" readonly>\n</td>\n<td>\n  <div class=\"btn-group pull-right\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n    <button type=\"button\" class=\"btn btn-danger\" data-toggle=\"modal\" data-target=\"#delete-"
     + escapeExpression(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"_id","hash":{},"data":data}) : helper)))
     + "\"><span class=\"glyphicon glyphicon-trash\"></span> <span class=\"text\">Delete</span></button>\n  </div>\n\n  <div class=\"modal fade\" tabindex=\"-1\" id=\"delete-"
     + escapeExpression(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"_id","hash":{},"data":data}) : helper)))
@@ -171,7 +171,7 @@ this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-bet
   },"useData":true});
 
 this["JST"]["layouts.users"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<div id=\"list\"></div>\n<div id=\"new\"></div>";
+  return "<div id=\"list\" class=\"table-responsive\"></div>\n<div id=\"new\" class=\"table-responsive\"></div>";
   },"useData":true});
 
 return this["JST"];

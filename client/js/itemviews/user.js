@@ -38,9 +38,12 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors', 'bootstr
     },
 
     delete: function() {
+      // Disable all form elements
       this.$('input').attr('disabled', 'disabled');
       this.$('button').attr('disabled', 'disabled');
 
+      // Destroy the model, deferring the collection update
+      // until the DELETE has returned
       this.model.destroy({ wait: true });
     },
 
