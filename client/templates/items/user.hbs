@@ -10,7 +10,9 @@
 <td>
   <div class="btn-group pull-right" role="group">
     <button type="button" class="btn btn-primary save" disabled="disabled"><span class="glyphicon glyphicon-floppy-disk"></span> <span class="text">Save</span></button>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-{{_id}}"><span class="glyphicon glyphicon-trash"></span> <span class="text">Delete</span></button>
+    {{#unless self}}
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-{{_id}}"><span class="glyphicon glyphicon-trash"></span> <span class="text">Delete</span></button>
+    {{/unless}}
   </div>
 
   <div class="modal fade" tabindex="-1" id="delete-{{_id}}">
