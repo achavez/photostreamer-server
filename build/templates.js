@@ -166,7 +166,7 @@ this["JST"]["items.user"] = Handlebars.template({"1":function(depth0,helpers,par
     + escapeExpression(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"_id","hash":{},"data":data}) : helper)))
     + "\">\n    <div class=\"modal-dialog\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h4 class=\"modal-title\">Confirm user deletion</h4>\n        </div>\n        <div class=\"modal-body\">\n          <p>Are you sure you want to delete user <strong>"
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong>?</p>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-danger delete\" data-dismiss=\"modal\"><span class=\"glyphicon glyphicon-trash\"></span> <span class=\"text\">Delete "
+    + "</strong>?</p>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-danger delete\"><span class=\"glyphicon glyphicon-trash\"></span> <span class=\"text\">Delete "
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "</span></button>\n          <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancel</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</td>";
 },"useData":true});

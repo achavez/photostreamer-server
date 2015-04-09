@@ -42,9 +42,17 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors', 'bootstr
       this.$('input').attr('disabled', 'disabled');
       this.$('button').attr('disabled', 'disabled');
 
-      // Destroy the model, deferring the collection update
-      // until the DELETE has returned
-      this.model.destroy({ wait: true });
+      // Close the modal and wait for it to finish hiding
+      // before destroying the model; if we don't, the
+      // .modal-open class may linger on the <body>
+      this.$('.modal').modal('hide');
+      this.$('.modal').on('hidden.bs.modal', function() {
+
+        // Destroy the model, deferring the collection update
+        // until the DELETE has returned
+        this.model.destroy({ wait: true });
+
+      }.bind(this));
     },
 
     /* ~ Config for backbone.stickit ~ */
@@ -68,6 +76,7 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors', 'bootstr
 
     onDestroy: function() {
       this.unstickit();
+      this.$('.modal').off('hidden.bs.modal');
     }
 
   });
