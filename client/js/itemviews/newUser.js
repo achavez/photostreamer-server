@@ -17,7 +17,8 @@ define(['marionette', 'tpl', 'itemviews/user', 'backbone.stickit'], function(Mar
     },
 
     // Set the view back to its original state when
-    // saving has finished
+    // saving has finished; this method is fired by the
+    // UserSave behavior
     _saved: function() {
       this.triggerMethod('user:new');
     },

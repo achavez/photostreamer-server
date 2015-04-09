@@ -1,4 +1,4 @@
-define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], function(Marionette, tpl) {
+define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors', 'bootstrap.modal'], function(Marionette, tpl) {
 
   'use strict';
 
@@ -15,7 +15,8 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], functio
     },
 
     // Set the view back to its original state when
-    // saving has finished
+    // saving has finished. This is called from the UserSave
+    // behavior.
     _saved: function() {
       this.$('input')
         .attr('disabled', null);
@@ -24,6 +25,23 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], functio
         .attr('disabled', 'disabled')
         .find('.text')
         .text('Save');
+    },
+
+    /* ~ Handle user deletion ~ */
+
+    ui: {
+      'delete': '.delete'
+    },
+
+    events: {
+      'click @ui.delete': 'delete'
+    },
+
+    delete: function() {
+      this.$('input').attr('disabled', 'disabled');
+      this.$('button').attr('disabled', 'disabled');
+
+      this.model.destroy({ wait: true });
     },
 
     /* ~ Config for backbone.stickit ~ */
