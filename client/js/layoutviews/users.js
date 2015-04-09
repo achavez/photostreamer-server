@@ -1,9 +1,10 @@
 define([
   'marionette',
+  'models/user',
   'compositeviews/users',
-  'itemviews/user',
+  'itemviews/newUser',
   'tpl'
-  ], function(Marionette, UsersCompositeView, UserItemView, tpl) {
+  ], function(Marionette, UserModel, UsersCompositeView, NewUserItemView, tpl) {
 
     'use strict';
 
@@ -24,8 +25,24 @@ define([
           collection: users
         }));
 
-        this.showChildView('new', new UserItemView());
+        this.newUser();
+      },
 
+      childEvents: {
+        'user:new': 'newUser'
+      },
+
+      newUser: function() {
+        var users = Marionette.Radio
+          .channel('app')
+          .request('data', 'users');
+
+        var newUser = new NewUserItemView({
+          model: new UserModel(),
+          collection: users
+        });
+
+        this.showChildView('new', newUser);
       },
 
       destroyImmediate: true,
@@ -34,7 +51,6 @@ define([
 
       regions: {
         list: '#list',
-        controls: '#controls',
         new: '#new'
       }
 

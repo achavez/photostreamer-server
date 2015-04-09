@@ -8,6 +8,10 @@ define(['marionette', 'itemviews/user', 'tpl'], function(Marionette, UserItemVie
 
     childView: UserItemView,
 
+    tagName: 'table',
+
+    className: 'table',
+
     childViewContainer: 'tbody'
 
   });

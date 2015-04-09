@@ -1,12 +1,14 @@
-define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], function(Marionette, tpl) {
+define(['marionette', 'tpl', 'itemviews/user', 'backbone.stickit'], function(Marionette, tpl, UserItemView) {
 
   'use strict';
 
   return Marionette.ItemView.extend({
 
-    template: tpl['items.user'],
+    template: tpl['items.newUser'],
 
-    tagName: 'tr',
+    tagName: 'table',
+
+    className: 'table',
 
     behaviors: {
       // This brings in all the logic to handle saving and
@@ -17,13 +19,7 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], functio
     // Set the view back to its original state when
     // saving has finished
     _saved: function() {
-      this.$('input')
-        .attr('disabled', null);
-
-      this.$('.save')
-        .attr('disabled', 'disabled')
-        .find('.text')
-        .text('Save');
+      this.triggerMethod('user:new');
     },
 
     /* ~ Config for backbone.stickit ~ */
@@ -37,8 +33,7 @@ define(['marionette', 'tpl', 'backbone.stickit', 'behaviors/behaviors'], functio
       '.email': {
         observe: 'email',
         events: ['change', 'keyup']
-      },
-      '.key': 'key'
+      }
     },
 
     onRender: function() {

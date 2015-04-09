@@ -3,7 +3,7 @@ define(['handlebars', '../templates/helpers'], function(Handlebars) {
 this["JST"] = this["JST"] || {};
 
 this["JST"]["composites.users"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<table class=\"table\" id=\"list\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Email</th>\n      <th>API Key</th>\n      <th></th>\n    </tr>\n  </thead>\n  <tbody></tbody>\n</table>";
+  return "<thead>\n  <tr>\n    <th>Name</th>\n    <th>Email</th>\n    <th>API Key</th>\n    <th></th>\n  </tr>\n</thead>\n<tbody></tbody>";
   },"useData":true});
 
 this["JST"]["desktopNotifications"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -111,6 +111,10 @@ this["JST"]["items.inspector"] = Handlebars.template({"1":function(depth0,helper
   return buffer + "	</div>\n</div>";
 },"useData":true});
 
+this["JST"]["items.newUser"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+  return "<thead>\n  <th col-span=\"4\">Add a new user</th>\n</thead>\n<tbody>\n  <td>\n    <input class=\"form-control name\" type=\"text\" placeholder=\"Name\">\n  </td>\n  <td>\n    <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\">\n  </td>\n  <td>\n    <input class=\"form-control\" type=\"text\" readonly>\n  </td>\n  <td>\n  <button type=\"button\" class=\"btn btn-success save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Create user</span></button>\n</tbody>";
+  },"useData":true});
+
 this["JST"]["items.notFound"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   return "<div class=\"alert alert-danger\" role=\"alert\"><span class=\"glyphicon glyphicon-alert\"></span> The page you're looking for can't be found. If you think this is a result of a bug in the application, please <a href=\"https://github.com/achavez/photostreamer-server/issues/new\" target=\"_blank\">file an issue</a> on Github.</div>";
   },"useData":true});
@@ -143,20 +147,15 @@ this["JST"]["items.photo"] = Handlebars.template({"1":function(depth0,helpers,pa
   return buffer + "			<button type=\"button\" class=\"inspect btn btn-default\"><i class=\"glyphicon glyphicon-zoom-in\"></i> Inspect</button>\n		</div>\n	</div>\n</div>";
 },"useData":true});
 
-this["JST"]["items.user"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["JST"]["items.user"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
   var helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-  return "    <input class=\"form-control key\" type=\"text\" value=\""
-    + escapeExpression(((helper = (helper = helpers.key || (depth0 != null ? depth0.key : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"key","hash":{},"data":data}) : helper)))
-    + "\" readonly>\n";
-},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  var stack1, helper, functionType="function", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, buffer = "<td>\n  <input class=\"form-control name\" type=\"text\" placeholder=\"Name\" value=\""
+  return "<td>\n  <input class=\"form-control name\" type=\"text\" placeholder=\"Name\" value=\""
     + escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"name","hash":{},"data":data}) : helper)))
     + "\">\n</td>\n<td>\n  <input class=\"form-control email\" type=\"email\" placeholder=\"Email address\" value=\""
     + escapeExpression(((helper = (helper = helpers.email || (depth0 != null ? depth0.email : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"email","hash":{},"data":data}) : helper)))
-    + "\">\n</td>\n<td>\n";
-  stack1 = helpers['if'].call(depth0, (depth0 != null ? depth0.key : depth0), {"name":"if","hash":{},"fn":this.program(1, data),"inverse":this.noop,"data":data});
-  if (stack1 != null) { buffer += stack1; }
-  return buffer + "</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n  </div>\n</td>";
+    + "\">\n</td>\n<td>\n  <input class=\"form-control key\" type=\"text\" value=\""
+    + escapeExpression(((helper = (helper = helpers.key || (depth0 != null ? depth0.key : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {"name":"key","hash":{},"data":data}) : helper)))
+    + "\" readonly>\n</td>\n<td>\n  <div class=\"btn-group\" role=\"group\">\n    <button type=\"button\" class=\"btn btn-primary save\" disabled=\"disabled\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> <span class=\"text\">Save</span></button>\n  </div>\n</td>";
 },"useData":true});
 
 this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
@@ -164,7 +163,7 @@ this["JST"]["layouts.stream"] = Handlebars.template({"compiler":[6,">= 2.0.0-bet
   },"useData":true});
 
 this["JST"]["layouts.users"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-  return "<table class=\"table\" id=\"list\"></table>\n\n<div id=\"controls\"></div>\n<div id=\"new\"></div>";
+  return "<div id=\"list\"></div>\n<div id=\"new\"></div>";
   },"useData":true});
 
 return this["JST"];
